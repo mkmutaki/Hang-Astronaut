@@ -21,7 +21,7 @@ const btns = document.querySelector(".buttons-over");
 const SkeletonLimbs = document.querySelectorAll(".l");
 const guessesLeft = document.querySelector(".guesses-left span");
 
-const words = ["Stars", "Vacuum", "Nebula", "Moon", "Sun", "Galaxy", "Asteroid", "Astronaut", "Nebula", "Infinity", "Earth"];
+const words = ["stars", "vacuum", "nebula", "moon", "sun", "galaxy", "asteroid", "astronaut", "nebula", "infinity", "earth"];
 const alphaKeys = "abcdefghijklmnopqrstuvwxyz".split("");
 let score = 0;
 let playable = true;
@@ -139,7 +139,6 @@ function resetGame() {
   main.classList.remove("blur-over");
   btnCat.disabled = false;
   btnPlay.disabled = false;
-  score = 0;
 
   playable = true;
   resetGuesses();
