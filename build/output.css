@@ -1160,7 +1160,7 @@ ul li:hover{
 }
 
 .skeleton-head {
-  background-image: url("/Images/Victim/head2.png");
+  background-image: url("../Images/Victim/head2.png");
   height: 33.499998px;
   width: 24.8px;
   left: 171px;
@@ -1169,7 +1169,7 @@ ul li:hover{
 }
 
 .skeleton-upper {
-  background-image: url("/Images/Victim/body2.png");
+  background-image: url("../Images/Victim/body2.png");
   height: 102px;
   width: 65px;
   left: 150px;
@@ -1178,7 +1178,7 @@ ul li:hover{
 }
 
 .skeleton-rightarm {
-  background-image: url("/Images/Victim/rightarm2.png");
+  background-image: url("../Images/Victim/rightarm2.png");
   height: 106px;
   width: 38px;
   left: 120px;
@@ -1187,7 +1187,7 @@ ul li:hover{
 }
 
 .skeleton-leftarm {
-  background-image: url("/Images/Victim/leftarm2.png");
+  background-image: url("../Images/Victim/leftarm2.png");
   height: 106px;
   width: 38px;
   left: 207px;
@@ -1196,7 +1196,7 @@ ul li:hover{
 }
 
 .skeleton-rightleg {
-  background-image: url("/Images/Victim/rightleg3.png");
+  background-image: url("../Images/Victim/rightleg3.png");
   width: 20px;
   height: 130px;
   bottom: 499px;
@@ -1205,7 +1205,7 @@ ul li:hover{
 }
 
 .skeleton-leftleg {
-  background-image: url("/Images/Victim/leftleg2.png");
+  background-image: url("../Images/Victim/leftleg2.png");
   height: 130px;
   width: 20px;
   left: 187px;
@@ -1278,7 +1278,7 @@ ul li:hover{
   content: "";
   height: 40%;
   width: 40%;
-  background-image: url("/Images/repeat.svg");
+  background-image: url("../Images/repeat.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1289,7 +1289,7 @@ ul li:hover{
   content: "";
   height: 45%;
   width: 45%;
-  background-image: url("/Images/home.png");
+  background-image: url("../Images/home.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1300,7 +1300,7 @@ ul li:hover{
   content: "";
   height: 40%;
   width: 40%;
-  background-image: url("/Images/forward.svg");
+  background-image: url("../Images/forward.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
