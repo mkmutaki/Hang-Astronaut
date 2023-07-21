@@ -139,6 +139,7 @@ function resetGame() {
   main.classList.remove("blur-over");
   btnCat.disabled = false;
   btnPlay.disabled = false;
+  score = 0;
 
   playable = true;
   resetGuesses();
@@ -201,6 +202,7 @@ btnPlay.addEventListener("click", function () {
 home.addEventListener("click", function () {
   btnCat.disabled = false;
   btnPlay.disabled = false;
+  score = 0;
 
   showMenu();
 });
@@ -208,6 +210,7 @@ home.addEventListener("click", function () {
 overHome.addEventListener("click", function () {
   resetGame();
   showMenu();
+  score = 0;
 });
 
 playAgain.addEventListener("click", function () {
