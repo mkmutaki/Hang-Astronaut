@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangman in Space</title>
+
+    <!--Styles-->
+    <link rel="stylesheet" href="./build/output.css" />
+
+    <!--scripts-->
+    <script defer src="./build/hangman.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script defer src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+  </head>
+
+  <body class="font-Arvo bg-slate-500">
+    <video autoplay loop muted plays-inline class="back-video">
+      <source src="./Images/space-bg.mp4" type="video/mp4" />
+    </video>
+
+    <section class="modal absolute top-0 left-0 z-[200] h-screen w-screen flex justify-center items-center transition-opacity duration-500">
+      <div class="modal-content h-[50%] w-[40%] border rounded-[20px] bg-off-black text-center justify-center items-center block shadow-md drop-down">
+        <h1 class="mt-14 mb-7 text-2xl text-off-white font-bold">HANG SKELETON</h1>
+        <div class="menu-container flex flex-col justify-center items-center">
+          <button class="menu-button start-game">Play!</button>
+          <div class="category-list relative">
+            <button class="menu-button category-button relative">Category <img src="./Images/icon-arrow-down.svg" alt="" class="h-3 pl-5" /></button>
+            <ul class="list hidden">
+              <li>Food</li>
+              <li>Sports</li>
+              <li>Instruments</li>
+              <li>Pokemons</li>
+              <li>Software</li>
+              <li>Sciences</li>
+              <li>Planets</li>
+              <li>Countries</li>
+              <li>Animals</li>
+              <li>Superheroes</li>
+            </ul>
+          </div>
+          <p class="text-off-white">[ While I implement the category feature, all current words are space related ]</p>
+        </div>
+      </div>
+    </section>
+    <main class="main-content blur-[10px] blur-in">
+      <nav class="nav-bar absolute top-0 w-full h-[11%] z-[100] grid grid-cols-3 justify-stretch items-stretch content-stretch bg-transparent p-[2.5]">
+        <div class="home-container row-home-row col-home-col flex flex-col justify-between items-end">
+          <button class="home-button cursor-pointer h-9 w-9 mr-[5%] mt-4 bg-transparent bg-contain"></button>
+        </div>
+        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3"><span>SPACE</span></div>
+        <div class="guesses-left h-full w-full ml-[5%] flex justify-start items-center"><span>6/6</span></div>
+      </nav>
+
+      <div class="text-center grid grid-cols-2" id="hangm">
+        <div class="h-80 w-64 mt-48 m-auto" id="hangm_animation">
+          <div id="hang-1" class="pole_h"></div>
+          <div id="hang-2" class="pole_v"></div>
+
+          <div id="hang-3" class="rope"></div>
+
+          <div id="hang-4" class="l skeleton-head"></div>
+          <div id="hang-5" class="l skeleton-upper"></div>
+          <div id="hang-6" class="l skeleton-rightarm"></div>
+          <div id="hang-7" class="l skeleton-leftarm"></div>
+          <div id="hang-8" class="l skeleton-rightleg"></div>
+          <div id="hang-9" class="l skeleton-leftleg"></div>
+        </div>
+        <div class="h-[19em] mt-56 mr-32">
+          <div class="wrong-letters-container inline-flex text-3xl items-center justify-center my-0 mx-2 h-[2em]">
+            <div id="wrong_letters"></div>
+          </div>
+
+          <div>
+            <span class="text-center relative h-[26%] flex justify-center items-stretch text-2xl text-off-white">Guess the Word:</span>
+            <ul class="word-container relative h-[26%] flex justify-center items-stretch"></ul>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <!-- Notification -->
+        <div class="notification-container py-[15px] px-5 relative -bottom-[120px] transition-transform duration-300 ease-in-out hidden">
+          <p class="m-0 text-center text-off-white">You have already entered this letter</p>
+        </div>
+      </footer>
+    </main>
+    <section class="popup collapse absolute flex justify-center items-center top-0 h-screen w-full z-[100]">
+      <div class="gameover-box h-[45%] w-[28%] min-w-[450px] p-12 flex items-center justify-center bg-gray-500 text-off-white rounded-3xl">
+        <div class="gameover-content relative rounded-2xl h-full w-full flex flex-col justify-center items-center">
+          <h1 class="gameover-text leading-[50px] box-content absolute text-center tracking-[2px] -top-14 text-[2.5rem] font-bold text-red-900"></h1>
+          <div class="gameover-data w-[90%] py-5 px-0 flex flex-col justify-center items-center rounded-xl">
+            <h3 id="reveal-word"></h3>
+          </div>
+          <div class="buttons-over w-[70%] absolute -bottom-[60px] flex justify-between outline-none">
+            <button class="main-menu btns"></button>
+            <button class="play-again btns"></button>
+            <button class="next-game btns"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

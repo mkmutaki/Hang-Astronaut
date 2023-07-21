@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo:ital@1&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.back-video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.blur-out {
+  animation: blur-out 500ms forwards ease-out;
+  @apply blur-none;
+}
+
+.blur-in {
+  animation: blur-in 500ms forwards ease-out;
+  @apply blur-[10px];
+}
+
+.blur-over {
+  animation: blur-in 500ms forwards ease-in;
+  @apply blur-[2px];
+}
+
+.drop-down {
+  animation: drop-down 300ms forwards ease-out;
+}
+
+.menu-button {
+  @apply relative flex justify-center items-center cursor-pointer h-[40px] w-[200px] my-3 mx-0 rounded-lg border-none outline-none bg-purple-700 text-lg font-bold;
+}
+
+.list {
+  @apply bg-slate-500 absolute w-full max-h-52 z-10 rounded-xl overflow-y-scroll overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white;
+}
+
+ul li {
+  @apply cursor-pointer h-7 w-full flex justify-center items-center text-white select-none hover:bg-black text-center;
+}
+
+.home-container .home-button {
+  background-image: url("/Images/main-home.png");
+}
+
+.category span {
+  @apply mt-0 text-center text-off-white text-4xl flex justify-center opacity-80 tracking-wide;
+}
+
+.guesses-left::before {
+  content: "Moves left:";
+  @apply text-[1.4rem] text-off-white opacity-50 flex items-center mr-5;
+}
+
+.guesses-left span {
+  @apply flex items-center w-auto text-center text-off-white text-[1.4rem] opacity-100;
+}
+
+.l {
+  display: none;
+}
+
+/*convert parts to tailwind when sizes are confirmed*/
+.pole_h {
+  background: #fff;
+  width: 160px;
+  height: 10px;
+  position: relative;
+  left: 46px;
+}
+
+.pole_v {
+  width: 10px;
+  height: 270px;
+  background: #fff;
+  left: 46px;
+  position: relative;
+}
+
+.rope {
+  width: 7px;
+  height: 40px;
+  background-color: #fff;
+  position: relative;
+  bottom: 270px;
+  left: 180px;
+}
+
+.skeleton-head {
+  background-image: url("/Images/Victim/head2.png");
+  height: 33.499998px;
+  width: 24.8px;
+  left: 171px;
+  bottom: 275px;
+  position: relative;
+}
+
+.skeleton-upper {
+  background-image: url("/Images/Victim/body2.png");
+  height: 102px;
+  width: 65px;
+  left: 150px;
+  bottom: 275.5px;
+  position: relative;
+}
+
+.skeleton-rightarm {
+  background-image: url("/Images/Victim/rightarm2.png");
+  height: 106px;
+  width: 38px;
+  left: 120px;
+  bottom: 363px;
+  position: relative;
+}
+
+.skeleton-leftarm {
+  background-image: url("/Images/Victim/leftarm2.png");
+  height: 106px;
+  width: 38px;
+  left: 207px;
+  bottom: 468px;
+  position: relative;
+}
+
+.skeleton-rightleg {
+  background-image: url("/Images/Victim/rightleg3.png");
+  width: 20px;
+  height: 130px;
+  bottom: 499px;
+  left: 159px;
+  position: relative;
+}
+
+.skeleton-leftleg {
+  background-image: url("/Images/Victim/leftleg2.png");
+  height: 130px;
+  width: 20px;
+  left: 187px;
+  bottom: 629px;
+  position: relative;
+}
+
+.letter {
+  border-bottom: 3px solid whitesmoke;
+  margin-bottom: auto 2;
+  display: inline-flex;
+  color: whitesmoke;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3px;
+  height: 50px;
+  width: 20px;
+}
+
+.wrong-letters-container span {
+  @apply text-3xl tracking-[0.5em] text-off-white;
+}
+
+.word-container span {
+  @apply h-9;
+}
+
+.notification-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px 10px 0 0;
+}
+
+.show {
+  transform: translateY(-50px);
+  display: block;
+}
+
+.gameover-box {
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+}
+
+.gameover-content {
+  border: 6px solid rgba(158, 24, 0, 0.664);
+}
+
+#reveal-word {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.btns {
+  @apply outline-none h-[60px] w-[60px] border-none rounded-[50%] cursor-pointer flex justify-center items-center;
+}
+
+.play-again::after {
+  content: "";
+  height: 40%;
+  width: 40%;
+  background-image: url("/Images/repeat.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+}
+
+.main-menu::after {
+  content: "";
+  height: 45%;
+  width: 45%;
+  background-image: url("/Images/home.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+}
+
+.next-game::after {
+  content: "";
+  height: 40%;
+  width: 40%;
+  background-image: url("/Images/forward.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+}
