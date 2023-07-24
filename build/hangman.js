@@ -201,6 +201,7 @@ btnPlay.addEventListener("click", function () {
 home.addEventListener("click", function () {
   btnCat.disabled = false;
   btnPlay.disabled = false;
+  resetGame();
   score = 0;
 
   showMenu();
@@ -214,6 +215,7 @@ overHome.addEventListener("click", function () {
 
 playAgain.addEventListener("click", function () {
   resetGame();
+  score = 0;
 });
 
 nextGame.addEventListener("click", function () {
