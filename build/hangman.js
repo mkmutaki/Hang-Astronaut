@@ -21,7 +21,7 @@ const btns = document.querySelector(".buttons-over");
 const SkeletonLimbs = document.querySelectorAll(".l");
 const guessesLeft = document.querySelector(".guesses-left span");
 
-const words = ["stars", "vacuum", "nebula", "moon", "sun", "galaxy", "asteroid", "astronaut", "nebula", "infinity", "earth"];
+const words = ["stars", "vacuum", "nebula", "moon", "sun", "galaxy", "asteroid", "astronaut", "nebula", "earth", "saturn", "mars", "blackhole", "planet", "orbit", "pluto", "neptune", "mercury", "jupiter", "meteor", "universe"];
 const alphaKeys = "abcdefghijklmnopqrstuvwxyz".split("");
 let score = 0;
 let playable = true;
