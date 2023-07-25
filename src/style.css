@@ -74,7 +74,7 @@ ul li {
 
 .pole_v {
   width: 10px;
-  height: 270px;
+  height: 330px;
   background: #fff;
   left: 46px;
   position: relative;
@@ -85,61 +85,61 @@ ul li {
   height: 40px;
   background-color: #fff;
   position: relative;
-  bottom: 270px;
+  bottom: 330px;
   left: 180px;
 }
 
 .skeleton-head {
-  background-image: url("../Images/Victim/head2.png");
-  height: 33.499998px;
-  width: 24.8px;
-  left: 171px;
-  bottom: 275px;
+  background-image: url("../Images/Victim/head3.png");
+  height: 44.4px;
+  width: 32px;
+  left: 168px;
+  bottom: 332px;
   position: relative;
 }
 
 .skeleton-upper {
-  background-image: url("../Images/Victim/body2.png");
-  height: 102px;
-  width: 65px;
-  left: 150px;
-  bottom: 275.5px;
+  background-image: url("../Images/Victim/body3.png");
+  height: 115px;
+  width: 73px;
+  left: 147px;
+  bottom: 334.5px;
   position: relative;
 }
 
 .skeleton-rightarm {
-  background-image: url("../Images/Victim/rightarm2.png");
-  height: 106px;
-  width: 38px;
-  left: 120px;
-  bottom: 363px;
+  background-image: url("../Images/Victim/rightarm3.png");
+  height: 127px;
+  width: 50px;
+  left: 109px;
+  bottom: 433px;
   position: relative;
 }
 
 .skeleton-leftarm {
-  background-image: url("../Images/Victim/leftarm2.png");
-  height: 106px;
-  width: 38px;
-  left: 207px;
-  bottom: 468px;
+  background-image: url("../Images/Victim/leftarm3.png");
+  height: 128px;
+  width: 48px;
+  left: 212px;
+  bottom: 560px;
   position: relative;
 }
 
 .skeleton-rightleg {
   background-image: url("../Images/Victim/rightleg3.png");
-  width: 20px;
-  height: 130px;
-  bottom: 499px;
-  left: 159px;
+  height: 150px;
+  width: 22px;
+  bottom: 602px;
+  left: 157px;
   position: relative;
 }
 
 .skeleton-leftleg {
   background-image: url("../Images/Victim/leftleg2.png");
-  height: 130px;
-  width: 20px;
-  left: 187px;
-  bottom: 629px;
+  height: 150px;
+  width: 22px;
+  left: 188px;
+  bottom: 753px;
   position: relative;
 }
 
