@@ -71,7 +71,26 @@
           </div>
           
           <!-- Small subtitle -->
-          <p class="mission-subtitle mt-4 text-off-white">Select your mission parameters and embark into the unknown</p>
+          <p class="mission-subtitle text-off-white">Select your mission and embark into the unknown</p>
+          
+          <!-- Centered categories panel (hidden by default) -->
+          <div class="categories-panel fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="categories-container bg-off-black bg-opacity-90 border border-slate-600 rounded-xl p-6 w-[80%] max-w-md mx-auto shadow-lg transform scale-95 transition-all duration-300">
+              <h3 class="categories-title text-xl font-bold text-off-white mb-4">SELECT MISSION TYPE</h3>
+              <ul class="categories-list grid grid-cols-1 gap-3 max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-400">
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Planets</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Galaxies</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Space Tech</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Astro Gear</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Celestial Phenomena</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Space Missions</li>
+                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">🌍 from Space</li>
+              </ul>
+              <button class="close-categories mt-4 w-full py-2 px-4 bg-slate-700 rounded-lg text-off-white hover:bg-slate-600 transition-colors">
+                Close
+              </button>
+            </div>
+          </div>
         </div>
         
         <!-- Cosmic particles overlay -->

@@ -19,6 +19,11 @@ const gameoverText = document.querySelector(".gameover-text");
 const noti = document.querySelector(".notification-container");
 const btns = document.querySelector(".buttons-over");
 
+// New selectors for centered categories panel
+const categoriesPanel = document.querySelector(".categories-panel");
+const closeCategories = document.querySelector(".close-categories");
+const categoryItems = document.querySelectorAll(".category-item");
+
 const SkeletonLimbs = document.querySelectorAll(".l");
 const guessesLeft = document.querySelector(".guesses-left span");
 const categoryDisplay = document.querySelector(".category span");
@@ -234,8 +239,20 @@ function resetGuesses() {
 }
 
 function toggleCat() {
-  let categoryList = document.querySelector(".category-list .list");
-  categoryList.classList.toggle("hidden");
+  // Show the centered categories panel instead of the dropdown
+  categoriesPanel.classList.toggle("hidden");
+  
+  // Add a subtle animation effect when showing
+  if (!categoriesPanel.classList.contains("hidden")) {
+    const container = categoriesPanel.querySelector('.categories-container');
+    container.style.opacity = "0";
+    container.style.transform = "scale(0.95)";
+    
+    setTimeout(() => {
+      container.style.opacity = "1";
+      container.style.transform = "scale(1)";
+    }, 10);
+  }
 }
 
 function setCategory(category) {
@@ -414,12 +431,16 @@ btnCat.addEventListener("focusout", function () {
 });
 
 // Category selection functionality
-const categoryItems = document.querySelectorAll(".category-list .list li");
 categoryItems.forEach(item => {
   item.addEventListener("click", function() {
     setCategory(this.textContent);
     toggleCat();
   });
+});
+
+// Close categories panel
+closeCategories.addEventListener("click", function() {
+  categoriesPanel.classList.add("hidden");
 });
 
 // Start game button
