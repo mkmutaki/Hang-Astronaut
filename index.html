@@ -21,26 +21,64 @@
     </video>
 
     <section class="modal absolute top-0 left-0 z-[200] h-screen w-screen flex justify-center items-center transition-opacity duration-500">
-      <div class="modal-content h-[50%] w-[40%] border rounded-[20px] bg-off-black text-center justify-center items-center block shadow-md drop-down">
-        <h1 class="mt-14 mb-7 text-2xl text-off-white font-bold">HANG SKELETON</h1>
-        <div class="menu-container flex flex-col justify-center items-center">
-          <button class="menu-button start-game">Play!</button>
-          <div class="category-list relative">
-            <button class="menu-button category-button relative">Category <img src="./Images/icon-arrow-down.svg" alt="" class="h-3 pl-5" /></button>
-            <ul class="list hidden">
-              <li>Food</li>
-              <li>Sports</li>
-              <li>Instruments</li>
-              <li>Pokemons</li>
-              <li>Software</li>
-              <li>Sciences</li>
-              <li>Planets</li>
-              <li>Countries</li>
-              <li>Animals</li>
-              <li>Superheroes</li>
-            </ul>
+      <div class="modal-content h-[70%] w-[60%] border rounded-[20px] bg-off-black text-center justify-center items-center block shadow-md drop-down overflow-hidden">
+        <!-- Animated starfield background -->
+        <div class="animated-stars"></div>
+        
+        <!-- Floating planets -->
+        <div class="floating-planet planet-1"></div>
+        <div class="floating-planet planet-2"></div>
+        <div class="floating-planet planet-3"></div>
+        
+        <div class="cosmic-content">
+          <!-- Rocket ship icon -->
+          <div class="rocket-container">
+            <div class="rocket-icon">🚀</div>
+            <div class="rocket-glow"></div>
           </div>
-          <p class="text-off-white">[ While I implement the category feature, all current words are space related ]</p>
+          
+          <!-- Game title -->
+          <h1 class="game-title mt-2 mb-0">COSMIC</h1>
+          <h2 class="game-subtitle mb-2">HANGMAN</h2>
+          
+          <!-- Subtitle -->
+          <p class="game-description mb-8">Navigate the depths of space through words</p>
+          
+          <!-- Action buttons -->
+          <div class="menu-container flex flex-col justify-center items-center">
+            <button class="menu-button start-game action-button primary-button">
+              <span class="button-icon">🎮</span>
+              <span class="button-text">BEGIN MISSION</span>
+              <div class="button-shimmer"></div>
+            </button>
+            
+            <div class="category-list relative mt-4">
+              <button class="menu-button category-button action-button secondary-button">
+                <span class="button-icon">📋</span>
+                <span class="button-text">MISSION TYPES</span>
+                <div class="button-shimmer"></div>
+              </button>
+              <ul class="list hidden bg-off-black border border-slate-600 rounded-lg py-2 px-4 absolute w-full mt-2 z-10">
+                <li>Planets</li>
+                <li>Galaxies</li>
+                <li>Space Tech</li>
+                <li>Astro Gear</li>
+                <li>Celestial Phenomena</li>
+                <li>Space Missions</li>
+                <li>🌍 from Space</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Small subtitle -->
+          <p class="mission-subtitle mt-4 text-off-white">Select your mission parameters and embark into the unknown</p>
+        </div>
+        
+        <!-- Cosmic particles overlay -->
+        <div class="cosmic-particles">
+          <div class="particle particle-1"></div>
+          <div class="particle particle-2"></div>
+          <div class="particle particle-3"></div>
         </div>
       </div>
     </section>
@@ -49,7 +87,7 @@
         <div class="home-container row-home-row col-home-col flex flex-col justify-between items-end">
           <button class="home-button cursor-pointer h-9 w-9 mr-[5%] mt-4 bg-transparent bg-contain"></button>
         </div>
-        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3"><span>SPACE</span></div>
+        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3"><span>Planets</span></div>
         <div class="guesses-left h-full w-full ml-[5%] flex justify-start items-center"><span>6/6</span></div>
       </nav>
 
