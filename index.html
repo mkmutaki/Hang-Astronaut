@@ -20,8 +20,8 @@
       <source src="./Images/space-bg.mp4" type="video/mp4" />
     </video>
 
-    <section class="modal absolute top-0 left-0 z-[200] h-screen w-screen flex justify-center items-center transition-opacity duration-500">
-      <div class="modal-content h-[70%] w-[60%] border rounded-[20px] bg-off-black text-center justify-center items-center block shadow-md drop-down overflow-hidden">
+    <section class="modal modal-overlay">
+      <div class="modal-content modal-content-base drop-down">
         <!-- Animated starfield background -->
         <div class="animated-stars"></div>
         
@@ -78,13 +78,13 @@
             <div class="categories-container bg-off-black bg-opacity-90 border border-slate-600 rounded-xl p-6 w-[80%] max-w-md mx-auto shadow-lg transform scale-95 transition-all duration-300">
               <h3 class="categories-title text-xl font-bold text-off-white mb-4">SELECT MISSION TYPE</h3>
               <ul class="categories-list grid grid-cols-1 gap-3 max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-400">
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Planets</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Galaxies</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Space Tech</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Astro Gear</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Celestial Phenomena</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">Space Missions</li>
-                <li class="category-item py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer">🌍 from Space</li>
+                <li class="category-item category-item-base">Planets</li>
+                <li class="category-item category-item-base">Galaxies</li>
+                <li class="category-item category-item-base">Space Tech</li>
+                <li class="category-item category-item-base">Astro Gear</li>
+                <li class="category-item category-item-base">Celestial Phenomena</li>
+                <li class="category-item category-item-base">Space Missions</li>
+                <li class="category-item category-item-base">🌍 from Space</li>
               </ul>
               <button class="close-categories mt-4 w-full py-2 px-4 bg-slate-700 rounded-lg text-off-white hover:bg-slate-600 transition-colors">
                 Close
@@ -102,16 +102,20 @@
       </div>
     </section>
     <main class="main-content blur-[10px] blur-in">
-      <nav class="nav-bar absolute top-0 w-full h-[11%] z-[100] grid grid-cols-3 justify-stretch items-stretch content-stretch bg-transparent p-[2.5]">
+      <nav class="nav-bar nav-section">
         <div class="home-container row-home-row col-home-col flex flex-col justify-between items-end">
-          <button class="home-button cursor-pointer h-9 w-9 mr-[5%] mt-4 bg-transparent bg-contain"></button>
+          <button class="home-button"></button>
         </div>
-        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3"><span>Planets</span></div>
-        <div class="guesses-left h-full w-full ml-[5%] flex justify-start items-center"><span>6/6</span></div>
+        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3">
+          <span class="text-game-large mt-0">Planets</span>
+        </div>
+        <div class="guesses-left h-full w-full ml-[5%] flex justify-start items-center text-game-medium">
+          <span>6/6</span>
+        </div>
       </nav>
 
-      <div class="text-center grid grid-cols-2" id="hangm">
-        <div class="h-80 w-64 mt-48 m-auto" id="hangm_animation">
+      <div class="game-layout" id="hangm">
+        <div class="hangman-container" id="hangm_animation">
           <div id="hang-1" class="pole_h"></div>
           <div id="hang-2" class="pole_v"></div>
 
@@ -124,7 +128,7 @@
           <div id="hang-8" class="l skeleton-rightleg"></div>
           <div id="hang-9" class="l skeleton-leftleg"></div>
         </div>
-        <div class="h-[19em] mt-56 mr-32">
+        <div class="word-section">
           <div class="wrong-letters-container inline-flex text-3xl items-center justify-center my-0 mx-2 h-[2em]">
             <div id="wrong_letters"></div>
           </div>
@@ -138,22 +142,22 @@
 
       <footer>
         <!-- Notification -->
-        <div class="notification-container py-[15px] px-5 relative -bottom-[120px] transition-transform duration-300 ease-in-out hidden">
+        <div class="notification-container">
           <p class="m-0 text-center text-off-white">You have already entered this letter</p>
         </div>
       </footer>
     </main>
-    <section class="popup collapse absolute flex justify-center items-center top-0 h-screen w-full z-[100]">
-      <div class="gameover-box h-[45%] w-[28%] min-w-[450px] p-12 flex items-center justify-center bg-gradient-to-b from-slate-600 to-off-black text-off-white rounded-3xl">
-        <div class="gameover-content relative rounded-2xl h-full w-full flex flex-col justify-center items-center">
+    <section class="popup popup-overlay">
+      <div class="gameover-box gameover-modal">
+        <div class="gameover-content">
           <h1 class="gameover-text leading-[50px] box-content absolute text-center tracking-[2px] -top-14 text-[2.5rem] font-bold text-red-900"></h1>
           <div class="gameover-data w-[90%] py-5 px-0 flex flex-col justify-center items-center rounded-xl">
             <h3 id="reveal-word"></h3>
           </div>
           <div class="buttons-over w-[70%] absolute -bottom-[60px] flex justify-between outline-none">
-            <button class="main-menu btns"></button>
-            <button class="play-again btns"></button>
-            <button class="next-game btns"></button>
+            <button class="main-menu btn-game-action btns"></button>
+            <button class="play-again btn-game-action btns"></button>
+            <button class="next-game btn-game-action btns"></button>
           </div>
         </div>
       </div>

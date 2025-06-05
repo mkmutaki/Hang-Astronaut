@@ -4,6 +4,61 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Component Classes for Repeated Patterns */
+@layer components {
+  .btn-primary {
+    @apply relative flex justify-center items-center cursor-pointer h-[50px] w-[260px] my-3 mx-0 rounded-lg border-none outline-none bg-red-700 text-lg font-bold;
+  }
+  
+  .btn-game-action {
+    @apply outline-none h-[60px] w-[60px] border-none rounded-[50%] cursor-pointer flex justify-center items-center;
+  }
+  
+  .text-game-large {
+    @apply text-center text-off-white text-4xl flex justify-center opacity-80 tracking-wide;
+  }
+  
+  .text-game-medium {
+    @apply text-[1.4rem] text-off-white opacity-50 flex items-center mr-5;
+  }
+  
+  .modal-overlay {
+    @apply absolute top-0 left-0 z-[200] h-screen w-screen flex justify-center items-center transition-opacity duration-500;
+  }
+  
+  .modal-content-base {
+    @apply h-[70%] w-[60%] border rounded-[20px] bg-off-black text-center justify-center items-center block shadow-md overflow-hidden;
+  }
+  
+  .category-item-base {
+    @apply py-2 px-4 bg-slate-800 bg-opacity-50 rounded-lg text-off-white hover:bg-slate-700 transition-colors cursor-pointer;
+  }
+  
+  .nav-section {
+    @apply absolute top-0 w-full h-[11%] z-[100] grid grid-cols-3 justify-stretch items-stretch content-stretch bg-transparent p-[2.5];
+  }
+  
+  .game-layout {
+    @apply text-center grid grid-cols-2;
+  }
+  
+  .hangman-container {
+    @apply h-80 w-64 mt-48 m-auto;
+  }
+  
+  .word-section {
+    @apply h-[19em] mt-56 mr-32;
+  }
+  
+  .popup-overlay {
+    @apply collapse absolute flex justify-center items-center top-0 h-screen w-full z-[100];
+  }
+  
+  .gameover-modal {
+    @apply h-[45%] w-[28%] min-w-[450px] p-12 flex items-center justify-center bg-gradient-to-b from-slate-600 to-off-black text-off-white rounded-3xl;
+  }
+}
+
 .back-video {
   position: fixed;
   right: 0;
@@ -11,6 +66,7 @@
   min-width: 100%;
   min-height: 100%;
   z-index: -1;
+  object-fit: cover;
 }
 
 /* Animated Stars */
@@ -330,18 +386,6 @@
   box-sizing: border-box;
 }
 
-.back-video {
-  position: absolute;
-  right: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
-
 .blur-out {
   animation: blur-out 500ms forwards ease-out;
   @apply blur-none;
@@ -361,10 +405,6 @@
   animation: drop-down 300ms forwards ease-out;
 }
 
-.menu-button {
-  @apply relative flex justify-center items-center cursor-pointer h-[50px] w-[260px] my-3 mx-0 rounded-lg border-none outline-none bg-red-700 text-lg font-bold;
-}
-
 .list {
   @apply bg-slate-500 absolute w-full max-h-52 z-10 rounded-xl overflow-y-scroll overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white;
 }
@@ -375,15 +415,11 @@ ul li {
 
 .home-container .home-button {
   background-image: url("../Images/main-home.png");
-}
-
-.category span {
-  @apply mt-0 text-center text-off-white text-4xl flex justify-center opacity-80 tracking-wide;
+  @apply cursor-pointer h-9 w-9 mr-[5%] mt-4 bg-transparent bg-contain;
 }
 
 .guesses-left::before {
   content: "Moves left:";
-  @apply text-[1.4rem] text-off-white opacity-50 flex items-center mr-5;
 }
 
 .guesses-left span {
@@ -394,7 +430,7 @@ ul li {
   display: none;
 }
 
-/*convert parts to tailwind when sizes are confirmed*/
+/*Hangman parts*/
 .pole_h {
   background: #fff;
   width: 160px;
@@ -498,6 +534,7 @@ ul li {
 .notification-container {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px 10px 0 0;
+  @apply py-[15px] px-5 relative -bottom-[120px] transition-transform duration-300 ease-in-out hidden;
 }
 
 .show {
@@ -511,15 +548,12 @@ ul li {
 
 .gameover-content {
   border: 6px solid rgba(158, 24, 0, 0.664);
+  @apply relative rounded-2xl h-full w-full flex flex-col justify-center items-center;
 }
 
 #reveal-word {
   font-size: 2rem;
   text-align: center;
-}
-
-.btns {
-  @apply outline-none h-[60px] w-[60px] border-none rounded-[50%] cursor-pointer flex justify-center items-center;
 }
 
 .play-again::after {
