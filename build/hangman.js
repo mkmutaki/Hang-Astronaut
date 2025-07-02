@@ -15,7 +15,15 @@ const btnPlayText = btnPlay.querySelector(".button-text");
 const wordEl = document.querySelector(".word-container");
 const revealWord = document.querySelector("#reveal-word");
 const wrongLettersEl = document.getElementById("wrong_letters");
-const gameoverText = document.querySelector(".gameover-text");
+
+// New gameover selectors
+const gameoverModal = document.querySelector(".gameover-modal");
+const gameoverTitle = document.querySelector("#gameover-title");
+const gameoverSubtitle = document.querySelector("#gameover-subtitle");
+const statusDescription = document.querySelector("#status-description");
+const statusIcon = document.querySelector("#status-icon");
+const statusGlow = document.querySelector("#status-glow");
+
 const noti = document.querySelector(".notification-container");
 const btns = document.querySelector(".buttons-over");
 
@@ -64,7 +72,8 @@ function initCategoryProgress() {
       played: false,
       correctLetters: [],
       wrongLetters: [],
-      selectedWord: null
+      selectedWord: null,
+      completedWords: [] // Track words that have been successfully guessed
     };
   });
 }
@@ -156,6 +165,39 @@ class CosmicHangman {
       }, 3000 + index * 1000);
     });
   }
+
+  // Method to create stars for gameover modal
+  createGameoverStars() {
+    const gameoverStarsContainer = document.querySelector('.gameover-stars');
+    if (!gameoverStarsContainer) return;
+    
+    // Clear existing stars
+    gameoverStarsContainer.innerHTML = '';
+    
+    const starCount = 50;
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      const size = Math.random() * 2 + 0.5;
+      const animationDelay = Math.random() * 4;
+      const animationDuration = Math.random() * 4 + 2;
+      const opacity = Math.random() * 0.7 + 0.3;
+
+      star.style.left = `${left}%`;
+      star.style.top = `${top}%`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.animationDelay = `${animationDelay}s`;
+      star.style.animationDuration = `${animationDuration}s`;
+      star.style.opacity = opacity;
+
+      gameoverStarsContainer.appendChild(star);
+    }
+  }
 }
 
 //// Functions ////
@@ -171,12 +213,27 @@ function displayWord() {
 
   // Check and display if won
   if (innerWord === selectedWord) {
-    document.querySelector(".popup").style.visibility = "visible";
+    // Mark this word as completed for the current category
+    if (!categoryProgress[currentCategory].completedWords.includes(selectedWord)) {
+      categoryProgress[currentCategory].completedWords.push(selectedWord);
+    }    document.querySelector(".popup").style.visibility = "visible";
     main.classList.add("blur-over");
 
-    gameoverText.innerText = "Congratulations!";
-    gameoverText.style.color = "green";
-    document.querySelector(".gameover-content").style.borderColor = "green";
+    // Ensure animations are enabled when showing the overlay
+    document.querySelector(".popup").classList.remove("disable-animations");
+
+    // Create stars for gameover modal
+    if (window.cosmicHangman) {
+      window.cosmicHangman.createGameoverStars();
+    }
+
+    // Apply success state
+    gameoverModal.classList.add("success-state");
+    gameoverTitle.innerText = "MISSION";
+    gameoverSubtitle.innerText = "ACCOMPLISHED";
+    statusDescription.innerText = "Outstanding work, space explorer!";
+    statusIcon.innerText = "🎉";
+    statusGlow.style.background = "rgba(34, 197, 94, 0.3)";
 
     revealWord.innerText = `Your current score is: ${(score = score + 10)}`;
 
@@ -202,21 +259,36 @@ function addWrongLetters() {
     }
   });
 
-  lessenGuesses();
-
-  // Display Gameover box
+  lessenGuesses();  // Display Gameover box
   if (wrongLetters.length === SkeletonLimbs.length) {
     document.querySelector(".popup").style.visibility = "visible";
     main.classList.add("blur-over");
+    
+    // Ensure animations are enabled when showing the overlay
+    document.querySelector(".popup").classList.remove("disable-animations");
+    
+    // Create stars for gameover modal
+    if (window.cosmicHangman) {
+      window.cosmicHangman.createGameoverStars();
+    }
+    
     nextGame.remove();
     btns.append(playAgain);
-    gameoverText.innerText = "GAME OVER";
-    gameoverText.style.color = "red";
-    document.querySelector(".gameover-content").style.borderColor = "red";
+
+    // Apply failure state
+    gameoverModal.classList.add("failure-state");
+    gameoverTitle.innerText = "MISSION";
+    gameoverSubtitle.innerText = "FAILED";
+    statusDescription.innerText = "The void has claimed another explorer...";
+    statusIcon.innerText = "💀";
+    statusGlow.style.background = "rgba(239, 68, 68, 0.3)";
 
     revealWord.innerText = `The word was: ${selectedWord}`;
 
     playable = false;
+    // Ensure buttons are disabled during game over state
+    btnCat.disabled = true;
+    btnPlay.disabled = true;
   }
 }
 
@@ -331,10 +403,11 @@ function restoreCategoryProgress(category) {
 
 function updatePlayButtonText() {
   // Change button text to "CONTINUE MISSION" only if the current category 
-  // has been played AND actual gameplay has occurred (guesses made)
-  if (categoryProgress[currentCategory].played && 
-      (categoryProgress[currentCategory].correctLetters.length > 0 || 
-       categoryProgress[currentCategory].wrongLetters.length > 0)) {
+  // has been played AND actual gameplay has occurred (guesses made) AND the game is not over
+  const categoryData = categoryProgress[currentCategory];
+  const hasGameplayData = categoryData.correctLetters.length > 0 || categoryData.wrongLetters.length > 0;
+  
+  if (categoryData.played && hasGameplayData && playable) {
     btnPlayText.textContent = "CONTINUE MISSION";
   } else {
     btnPlayText.textContent = "BEGIN MISSION";
@@ -346,6 +419,29 @@ function showMenu() {
   dialogBox.style.opacity = 1;
   main.classList.toggle("blur-out");
   main.classList.toggle("blur-in");
+  
+  // Hide gameover popup if it's visible with instant animations disabled
+  const popupOverlay = document.querySelector(".popup");
+  if (popupOverlay.style.visibility === "visible") {
+    popupOverlay.classList.add("disable-animations");
+    popupOverlay.style.visibility = "collapse";
+    main.classList.remove("blur-over");
+    
+    // Clear gameover state classes
+    gameoverModal.classList.remove("success-state", "failure-state");
+    
+    // Re-enable animations after closing
+    setTimeout(() => {
+      popupOverlay.classList.remove("disable-animations");
+    }, 50);
+  }
+  
+  // Re-enable buttons that might have been disabled during gameplay
+  btnCat.disabled = false;
+  btnPlay.disabled = false;
+  
+  // Ensure menu is properly interactable
+  menu.classList.remove("disable-animations");
   
   // Update begin/continue button text
   updatePlayButtonText();
@@ -361,15 +457,30 @@ function closeMenu() {
   
   // Mark that gameplay has started
   hasStartedPlaying = true;
-  categoryProgress[currentCategory].played = true;
+  
+  // Only mark the category as played if the user has made progress in it
+  // (will be updated properly once they make a guess)
+  if (correctLetters.length > 0 || wrongLetters.length > 0) {
+    categoryProgress[currentCategory].played = true;
+  }
 }
 
 function resetGame(isNewCategory = false) {
-  document.querySelector(".popup").style.visibility = "collapse";
+  const popupOverlay = document.querySelector(".popup");
+  
+  // Instantly disable animations when closing
+  popupOverlay.classList.add("disable-animations");
+  
+  // Hide the overlay immediately
+  popupOverlay.style.visibility = "collapse";
   main.classList.remove("blur-over");
   btnCat.disabled = false;
   btnPlay.disabled = false;
 
+  // Clear gameover state classes
+  gameoverModal.classList.remove("success-state", "failure-state");
+
+  // Restore playable state
   playable = true;
   
   // Only reset guesses if it's a new category
@@ -377,14 +488,41 @@ function resetGame(isNewCategory = false) {
     resetGuesses();
   }
 
+  // Clear letter arrays
   correctLetters.splice(0);
   wrongLetters.splice(0);
 
-  selectedWord = currentWordList[Math.floor(Math.random() * currentWordList.length)];
+  // Select a new word
+  selectNewWord();
 
+  // Update display
   displayWord();
+  wrongLettersEl.innerHTML = "";
+  
+  // Reset visual hangman state
+  SkeletonLimbs.forEach(limb => {
+    limb.style.display = "none";
+  });
 
-  addWrongLetters();
+  // Remove the disable-animations class after a brief moment to re-enable animations for future use
+  setTimeout(() => {
+    popupOverlay.classList.remove("disable-animations");
+  }, 50);
+}
+
+function selectNewWord() {
+  const availableWords = currentWordList.filter(word => 
+    !categoryProgress[currentCategory].completedWords.includes(word)
+  );
+  
+  if (availableWords.length === 0) {
+    // All words in this category have been completed
+    // Could show a completion message or reset the category
+    categoryProgress[currentCategory].completedWords = [];
+    selectedWord = currentWordList[Math.floor(Math.random() * currentWordList.length)];
+  } else {
+    selectedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+  }
 }
 
 //// Event Listeners ////
@@ -394,6 +532,9 @@ window.addEventListener("keydown", (e) => {
   if (playable) {
     // Confirm that key pressed is a letter
     if (alphaKeys.includes(key)) {
+      // Mark the category as played when the first guess is made
+      categoryProgress[currentCategory].played = true;
+      
       if (selectedWord.includes(key)) {
         if (!correctLetters.includes(key)) {
           correctLetters.push(key);
@@ -448,25 +589,117 @@ btnPlay.addEventListener("click", function () {
   btnCat.disabled = true;
   btnPlay.disabled = true;
 
+  // If starting a fresh mission (BEGIN MISSION), ensure everything is properly reset
+  if (btnPlayText.textContent === "BEGIN MISSION") {
+    // Reset visual display completely
+    wrongLettersEl.innerHTML = "";
+    SkeletonLimbs.forEach(limb => {
+      limb.style.display = "none";
+    });
+    
+    // Do not mark as played yet - only mark when user makes first guess
+    categoryProgress[currentCategory].played = false;
+    
+    // If there's no ongoing game data, select a new word
+    if (categoryProgress[currentCategory].correctLetters.length === 0 && 
+        categoryProgress[currentCategory].wrongLetters.length === 0) {
+      selectNewWord();
+      displayWord();
+    }
+  }
+
   closeMenu();
 });
 
 // Home button
 home.addEventListener("click", function () {
+  // Check if a game is in progress (playable and some letters have been entered)
+  const hasGameProgress = correctLetters.length > 0 || wrongLetters.length > 0;
+  
+  if (playable && hasGameProgress) {
+    // Only save progress if the game is actually in progress with some user input
+    saveCurrentProgress();
+  } else if (!playable) {
+    // If game was over (won or lost), reset the current category progress
+    categoryProgress[currentCategory] = {
+      score: 0,
+      guesses: 6,
+      played: false,
+      correctLetters: [],
+      wrongLetters: [],
+      selectedWord: null,
+      completedWords: categoryProgress[currentCategory].completedWords || []
+    };
+    
+    // Reset game state
+    score = 0;
+    resetGuesses();
+    correctLetters.splice(0);
+    wrongLetters.splice(0);
+    playable = true;
+    
+    // Clear visual elements
+    wrongLettersEl.innerHTML = "";
+    SkeletonLimbs.forEach(limb => {
+      limb.style.display = "none";
+    });
+    
+    // Select new word and update display
+    selectNewWord();
+    displayWord();
+  } else {
+    // If game was just started but no letters guessed yet,
+    // reset the 'played' flag for the current category
+    categoryProgress[currentCategory].played = false;
+  }
+  
+  // Re-enable buttons
   btnCat.disabled = false;
   btnPlay.disabled = false;
   
-  // Save current progress before showing menu
-  saveCurrentProgress();
-  
+  // Show the menu with all functionality restored
   showMenu();
 });
 
 // Game over home button
 overHome.addEventListener("click", function () {
-  // Save current progress before returning to menu
-  saveCurrentProgress();
+  // When coming from a game over state, reset the category completely
+  categoryProgress[currentCategory] = {
+    score: 0,
+    guesses: 6,
+    played: false,  // This is crucial - set to false to reset the category state
+    correctLetters: [],
+    wrongLetters: [],
+    selectedWord: null,
+    completedWords: categoryProgress[currentCategory].completedWords || []
+  };
   
+  // Reset game state
+  score = 0;
+  resetGuesses();
+  correctLetters.splice(0);
+  wrongLetters.splice(0);
+  playable = true;
+  
+  // Clear visual elements
+  wrongLettersEl.innerHTML = "";
+  SkeletonLimbs.forEach(limb => {
+    limb.style.display = "none";
+  });
+  
+  // Select new word and update display
+  selectNewWord();
+  displayWord();
+  
+  // Reset buttons in menu
+  btnCat.disabled = false;
+  btnPlay.disabled = false;
+  
+  // Ensure all animations are reset
+  const popupOverlay = document.querySelector(".popup");
+  popupOverlay.classList.add("disable-animations");
+  
+  // Show menu with all functionality restored
   showMenu();
 });
 
@@ -500,7 +733,7 @@ document.addEventListener('mousemove', (e) => {
 
 // Initialize cosmic effects
 document.addEventListener('DOMContentLoaded', () => {
-  new CosmicHangman();
+  window.cosmicHangman = new CosmicHangman();
   // Set initial category display to the default category (Planets)
   categoryDisplay.innerText = currentCategory;
   

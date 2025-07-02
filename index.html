@@ -149,16 +149,61 @@
     </main>
     <section class="popup popup-overlay">
       <div class="gameover-box gameover-modal">
+        <!-- Animated starfield background -->
+        <div class="animated-stars gameover-stars"></div>
+        
+        <!-- Floating planets -->
+        <div class="floating-planet planet-1 gameover-planet"></div>
+        <div class="floating-planet planet-2 gameover-planet"></div>
+        <div class="floating-planet planet-3 gameover-planet"></div>
+        
         <div class="gameover-content">
-          <h1 class="gameover-text leading-[50px] box-content absolute text-center tracking-[2px] -top-14 text-[2.5rem] font-bold text-red-900"></h1>
-          <div class="gameover-data w-[90%] py-5 px-0 flex flex-col justify-center items-center rounded-xl">
-            <h3 id="reveal-word"></h3>
+          <!-- Status Icon Container -->
+          <div class="status-icon-container">
+            <div class="status-icon" id="status-icon">🚀</div>
+            <div class="status-glow" id="status-glow"></div>
           </div>
-          <div class="buttons-over w-[70%] absolute -bottom-[60px] flex justify-between outline-none">
-            <button class="main-menu btn-game-action btns"></button>
-            <button class="play-again btn-game-action btns"></button>
-            <button class="next-game btn-game-action btns"></button>
+          
+          <!-- Game Status Title -->
+          <h1 class="gameover-title" id="gameover-title">MISSION</h1>
+          <h2 class="gameover-subtitle" id="gameover-subtitle">STATUS</h2>
+          
+          <!-- Status Message -->
+          <p class="status-description" id="status-description">Mission status report</p>
+          
+          <!-- Reveal Word Section -->
+          <div class="reveal-section">
+            <h3 id="reveal-word" class="reveal-word-text"></h3>
           </div>
+          
+          <!-- Action Buttons -->
+          <div class="buttons-over gameover-buttons">
+            <button class="main-menu cosmic-button" title="Return to Base">
+              <span class="button-icon">🏠</span>
+              <span class="button-text">BASE</span>
+              <div class="button-shimmer"></div>
+            </button>
+            <button class="play-again cosmic-button" title="Retry Mission">
+              <span class="button-icon">🔄</span>
+              <span class="button-text">RETRY</span>
+              <div class="button-shimmer"></div>
+            </button>
+            <button class="next-game cosmic-button" title="Next Mission">
+              <span class="button-icon">➡️</span>
+              <span class="button-text">NEXT</span>
+              <div class="button-shimmer"></div>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Cosmic particles overlay -->
+        <div class="cosmic-particles gameover-particles">
+          <div class="particle particle-1"></div>
+          <div class="particle particle-2"></div>
+          <div class="particle particle-3"></div>
+          <div class="particle particle-4"></div>
+          <div class="particle particle-5"></div>
+          <div class="particle particle-6"></div>
         </div>
       </div>
     </section>
