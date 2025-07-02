@@ -529,6 +529,8 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+/* Button Components */
+
 .text-game-large{
   display: flex;
   justify-content: center;
@@ -671,6 +673,10 @@ video {
   border: 2px solid #475569;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(71, 85, 105, 0.3);
 }
+
+/* Common Animation Components */
+
+/* Additional Utility Classes */
 
 .fixed{
   position: fixed;
@@ -1032,6 +1038,8 @@ video {
 }
 
 /* Component Classes for Repeated Patterns */
+
+/* Base Video Background */
 
 .back-video {
   position: fixed;

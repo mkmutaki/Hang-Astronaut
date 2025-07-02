@@ -9,6 +9,7 @@
   },
   "scripts": {
     "watch": "npx tailwindcss -i ./src/style.css -o ./build/output.css --watch ",
-    "minify": "npx tailwindcss -i ./src/style.css -o ./build/output.css --minify"
+    "minify": "npx tailwindcss -i ./src/style.css -o ./build/output.css --minify",
+    "minify:optimized": "npx tailwindcss -i ./src/style.css.optimized -o ./build/output.css --minify"
   }
 }

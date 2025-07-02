@@ -6,6 +6,7 @@
 
 /* Component Classes for Repeated Patterns */
 @layer components {
+  /* Button Components */
   .btn-primary {
     @apply relative flex justify-center items-center cursor-pointer h-[50px] w-[260px] my-3 mx-0 rounded-lg border-none outline-none bg-red-700 text-lg font-bold;
   }
@@ -60,8 +61,36 @@
     border: 2px solid #475569;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(71, 85, 105, 0.3);
   }
+  
+  /* Common Animation Components */
+  .cosmic-glow {
+    @apply absolute inset-0 rounded-full blur-2xl scale-150;
+    animation: pulse 3s infinite;
+    background: rgba(148, 163, 184, 0.1);
+  }
+  
+  .cosmic-button-base {
+    @apply relative overflow-hidden font-semibold py-2 px-4 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg cursor-pointer;
+  }
+  
+  /* Additional Utility Classes */
+  .gradient-text {
+    @apply bg-clip-text text-transparent font-bold tracking-wider;
+  }
+  
+  .floating-element {
+    @apply absolute rounded-full opacity-60 shadow-lg;
+    animation: float 8s infinite;
+    filter: blur(0.5px);
+  }
+  
+  .planet-base {
+    @apply floating-element;
+    box-shadow: 0 0 20px rgba(71, 85, 105, 0.3), inset 0 0 15px rgba(148, 163, 184, 0.1);
+  }
 }
 
+/* Base Video Background */
 .back-video {
   position: fixed;
   right: 0;
@@ -582,8 +611,6 @@ ul li {
   transform: translateY(-50px);
   display: block;
 }
-
-
 
 /* Gameover Stars Animation */
 .gameover-stars {
