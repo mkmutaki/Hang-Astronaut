@@ -212,36 +212,41 @@ function displayWord() {
   const innerWord = wordEl.innerText.replace(/[ \n]/g, "");
 
   // Check and display if won
-  if (innerWord === selectedWord) {
+  if (innerWord === selectedWord && playable) {
     // Mark this word as completed for the current category
     if (!categoryProgress[currentCategory].completedWords.includes(selectedWord)) {
       categoryProgress[currentCategory].completedWords.push(selectedWord);
-    }    document.querySelector(".popup").style.visibility = "visible";
-    main.classList.add("blur-over");
-
-    // Ensure animations are enabled when showing the overlay
-    document.querySelector(".popup").classList.remove("disable-animations");
-
-    // Create stars for gameover modal
-    if (window.cosmicHangman) {
-      window.cosmicHangman.createGameoverStars();
-    }
-
-    // Apply success state
-    gameoverModal.classList.add("success-state");
-    gameoverTitle.innerText = "MISSION";
-    gameoverSubtitle.innerText = "ACCOMPLISHED";
-    statusDescription.innerText = "Outstanding work, space explorer!";
-    statusIcon.innerText = "🎉";
-    statusGlow.style.background = "rgba(34, 197, 94, 0.3)";
-
-    revealWord.innerText = `Your current score is: ${(score = score + 10)}`;
-
-    playAgain.remove();
-    btns.append(nextGame);
-
-    playable = false;
+    }    
+    showWinOverlay();
   }
+}
+
+function showWinOverlay() {
+  document.querySelector(".popup").style.visibility = "visible";
+  main.classList.add("blur-over");
+
+  // Ensure animations are enabled when showing the overlay
+  document.querySelector(".popup").classList.remove("disable-animations");
+
+  // Create stars for gameover modal
+  if (window.cosmicHangman) {
+    window.cosmicHangman.createGameoverStars();
+  }
+
+  // Apply success state
+  gameoverModal.classList.add("success-state");
+  gameoverTitle.innerText = "MISSION";
+  gameoverSubtitle.innerText = "ACCOMPLISHED";
+  statusDescription.innerText = "Outstanding work, space explorer!";
+  statusIcon.innerText = "🎉";
+  statusGlow.style.background = "rgba(34, 197, 94, 0.3)";
+
+  revealWord.innerText = `Your current score is: ${(score = score + 10)}`;
+
+  playAgain.remove();
+  btns.append(nextGame);
+
+  playable = false;
 }
 
 function addWrongLetters() {
@@ -259,36 +264,11 @@ function addWrongLetters() {
     }
   });
 
-  lessenGuesses();  // Display Gameover box
-  if (wrongLetters.length === SkeletonLimbs.length) {
-    document.querySelector(".popup").style.visibility = "visible";
-    main.classList.add("blur-over");
-    
-    // Ensure animations are enabled when showing the overlay
-    document.querySelector(".popup").classList.remove("disable-animations");
-    
-    // Create stars for gameover modal
-    if (window.cosmicHangman) {
-      window.cosmicHangman.createGameoverStars();
-    }
-    
-    nextGame.remove();
-    btns.append(playAgain);
-
-    // Apply failure state
-    gameoverModal.classList.add("failure-state");
-    gameoverTitle.innerText = "MISSION";
-    gameoverSubtitle.innerText = "FAILED";
-    statusDescription.innerText = "The void has claimed another explorer...";
-    statusIcon.innerText = "💀";
-    statusGlow.style.background = "rgba(239, 68, 68, 0.3)";
-
-    revealWord.innerText = `The word was: ${selectedWord}`;
-
-    playable = false;
-    // Ensure buttons are disabled during game over state
-    btnCat.disabled = true;
-    btnPlay.disabled = true;
+  lessenGuesses();  // Update guesses and check if game over
+  
+  // Check if all limbs are displayed and the game is still playable
+  if (wrongLetters.length === SkeletonLimbs.length && playable) {
+    showGameOverOverlay();
   }
 }
 
@@ -301,8 +281,47 @@ function showNotification() {
 }
 
 function lessenGuesses() {
-  if (guesses > 0) guesses--;
-  guessesLeft.innerText = `${guesses}/6`;
+  if (guesses > 0) {
+    guesses--;
+    guessesLeft.innerText = `${guesses}/6`;
+    
+    // End the game if no more guesses left
+    if (guesses === 0 && playable) {
+      showGameOverOverlay();
+    }
+  }
+}
+
+// Function to show game over overlay
+function showGameOverOverlay() {
+  document.querySelector(".popup").style.visibility = "visible";
+  main.classList.add("blur-over");
+  
+  // Ensure animations are enabled when showing the overlay
+  document.querySelector(".popup").classList.remove("disable-animations");
+  
+  // Create stars for gameover modal
+  if (window.cosmicHangman) {
+    window.cosmicHangman.createGameoverStars();
+  }
+  
+  nextGame.remove();
+  btns.append(playAgain);
+
+  // Apply failure state
+  gameoverModal.classList.add("failure-state");
+  gameoverTitle.innerText = "MISSION";
+  gameoverSubtitle.innerText = "FAILED";
+  statusDescription.innerText = "The void has claimed another explorer...";
+  statusIcon.innerText = "💀";
+  statusGlow.style.background = "rgba(239, 68, 68, 0.3)";
+
+  revealWord.innerText = `The word was: ${selectedWord}`;
+
+  playable = false;
+  // Ensure buttons are disabled during game over state
+  btnCat.disabled = true;
+  btnPlay.disabled = true;
 }
 
 function resetGuesses() {
@@ -360,6 +379,9 @@ function setCategory(category) {
 }
 
 function saveCurrentProgress() {
+  // Make sure completedWords is properly tracked
+  updateCategoryCompletedWords();
+  
   // Save current progress for the current category
   categoryProgress[currentCategory] = {
     score: score,
@@ -367,7 +389,8 @@ function saveCurrentProgress() {
     played: true,
     correctLetters: [...correctLetters],
     wrongLetters: [...wrongLetters],
-    selectedWord: selectedWord
+    selectedWord: selectedWord,
+    completedWords: categoryProgress[currentCategory].completedWords || [] // Preserve completed words
   };
 }
 
@@ -395,6 +418,9 @@ function restoreCategoryProgress(category) {
     selectedWord = currentWordList[Math.floor(Math.random() * currentWordList.length)];
     progress.selectedWord = selectedWord;
   }
+  
+  // Ensure playable state is restored properly
+  playable = true;
   
   // Update display
   displayWord();
@@ -483,8 +509,8 @@ function resetGame(isNewCategory = false) {
   // Restore playable state
   playable = true;
   
-  // Only reset guesses if it's a new category
-  if (isNewCategory) {
+  // Only reset guesses if it's a new category or after a win/loss
+  if (isNewCategory || guesses === 0) {
     resetGuesses();
   }
 
@@ -525,6 +551,13 @@ function selectNewWord() {
   }
 }
 
+function updateCategoryCompletedWords() {
+  // Make sure the completedWords array exists for current category
+  if (!categoryProgress[currentCategory].completedWords) {
+    categoryProgress[currentCategory].completedWords = [];
+  }
+}
+
 //// Event Listeners ////
 
 window.addEventListener("keydown", (e) => {
@@ -539,14 +572,20 @@ window.addEventListener("keydown", (e) => {
         if (!correctLetters.includes(key)) {
           correctLetters.push(key);
           displayWord();
+          
+          // No need to check for wrong letters here as we're handling a correct guess
         } else {
           showNotification();
         }
       } else {
         if (!wrongLetters.includes(key)) {
           wrongLetters.push(key);
-
           addWrongLetters();
+          
+          // Check if game should end due to zero moves left
+          if (guesses === 0 && playable) {
+            showGameOverOverlay();
+          }
         } else {
           showNotification();
         }
@@ -600,12 +639,20 @@ btnPlay.addEventListener("click", function () {
     // Do not mark as played yet - only mark when user makes first guess
     categoryProgress[currentCategory].played = false;
     
+    // Clear any potential leftover letters that might have been stored
+    correctLetters.splice(0);
+    wrongLetters.splice(0);
+    
     // If there's no ongoing game data, select a new word
     if (categoryProgress[currentCategory].correctLetters.length === 0 && 
         categoryProgress[currentCategory].wrongLetters.length === 0) {
       selectNewWord();
       displayWord();
     }
+  } else {
+    // This is a CONTINUE MISSION case
+    // Make sure the game is in a playable state
+    playable = true;
   }
 
   closeMenu();
@@ -613,6 +660,9 @@ btnPlay.addEventListener("click", function () {
 
 // Home button
 home.addEventListener("click", function () {
+  // Ensure completedWords is properly tracked
+  updateCategoryCompletedWords();
+  
   // Check if a game is in progress (playable and some letters have been entered)
   const hasGameProgress = correctLetters.length > 0 || wrongLetters.length > 0;
   
@@ -663,6 +713,9 @@ home.addEventListener("click", function () {
 
 // Game over home button
 overHome.addEventListener("click", function () {
+  // Ensure completedWords is properly tracked
+  updateCategoryCompletedWords();
+  
   // When coming from a game over state, reset the category completely
   categoryProgress[currentCategory] = {
     score: 0,
@@ -709,11 +762,25 @@ playAgain.addEventListener("click", function () {
   score = 0;
   categoryProgress[currentCategory].score = 0;
   
+  // Clear letter arrays first to ensure a fresh start
+  correctLetters.splice(0);
+  wrongLetters.splice(0);
+  
   resetGame(true);
 });
 
 // Next game button
 nextGame.addEventListener("click", function () {
+  // Make sure completedWords is preserved
+  updateCategoryCompletedWords();
+  
+  // Clear letter arrays first to ensure a fresh start
+  correctLetters.splice(0);
+  wrongLetters.splice(0);
+  
+  // Reset guesses to 6 whenever player moves to next word
+  resetGuesses();
+  
   resetGame();
 });
 
