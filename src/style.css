@@ -952,18 +952,213 @@ ul li {
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  /* Home screen modal overlay centered and reduced size for md and smaller screens */
+  .modal-content-base {
+    width: 90% !important;
+    max-width: 500px !important;
+    height: auto !important;
+    max-height: 80vh !important;
+    margin: auto !important;
+    padding: 30px 5px !important;
+  }
+  
+  /* Button consistency for md and smaller screens */
+  .action-button {
+    width: 100% !important;
+    max-width: 200px !important;
+    min-height: 50px !important;
+    margin: 8px 0 !important;
+  }
+  
+  /* Center game elements better by adding more top margin */
+  .game-layout {
+    margin-top: 40px !important;
+  }
+  
+  .hangman-container {
+    margin-top: 60px auto !important;
+  }
+}
+
 @media (max-width: 768px) {
+  /* Fix main game layout - convert to single column */
+  .game-layout {
+    display: block !important;
+    padding: 10px;
+    margin-top: 60px !important; /* Push away from navbar */
+  }
+  
+  /* Fix hangman container positioning with better centering */
+  .hangman-container {
+    width: 200px !important;
+    height: 250px !important;
+    margin: 80px auto 40px auto !important; /* More top margin to center better */
+    transform: scale(0.8);
+    position: relative;
+  }
+  
+  /* Fix word section positioning with better spacing */
+  .word-section {
+    height: auto !important;
+    margin: 40px 0 !important; /* More margin for better spacing */
+    padding: 0 10px;
+  }
+  
+  /* Fix navigation bar */
+  .nav-section {
+    height: auto !important;
+    padding: 10px 15px !important;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  /* Adjust navigation elements */
+  .home-container {
+    margin: 0 !important;
+  }
+  
+  .home-container .home-button {
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 !important;
+  }
+  
+  .category {
+    margin: 0 !important;
+    text-align: center;
+  }
+  
+  .text-game-large {
+    font-size: 1.8rem !important;
+  }
+  
+  .guesses-left {
+    margin: 0 !important;
+    text-align: right;
+    font-size: 1rem !important;
+  }
+  
+  /* Fix word container */
+  .word-container {
+    height: auto !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin: 15px 0;
+  }
+  
+  .letter {
+    width: 25px !important;
+    height: 35px !important;
+    font-size: 18px !important;
+    margin: 0 2px;
+  }
+  
+  /* Fix wrong letters display */
+  .wrong-letters-container {
+    height: auto !important;
+    min-height: 50px;
+    flex-wrap: wrap;
+    font-size: 1.2rem !important;
+    padding: 10px;
+  }
+  
+  /* Scale hangman parts for mobile */
+  .pole_h {
+    width: 120px !important;
+    left: 40px !important;
+  }
+  
+  .pole_v {
+    height: 200px !important;
+    left: 40px !important;
+  }
+  
+  .rope {
+    height: 30px !important;
+    left: 135px !important;
+    bottom: 200px !important;
+  }
+  
+  .skeleton-head {
+    left: 127px !important;
+    bottom: 202px !important;
+  }
+  
+  .skeleton-upper {
+    left: 110px !important;
+    bottom: 204px !important;
+  }
+  
+  .skeleton-rightarm {
+    left: 82px !important;
+    bottom: 290px !important;
+  }
+  
+  .skeleton-leftarm {
+    left: 159px !important;
+    bottom: 390px !important;
+  }
+  
+  .skeleton-rightleg {
+    left: 118px !important;
+    bottom: 415px !important;
+  }
+  
+  .skeleton-leftleg {
+    left: 141px !important;
+    bottom: 545px !important;
+  }
+  
+  /* Modal improvements */
+  .modal-content-base {
+    width: 95% !important;
+    max-width: 400px !important;
+    height: auto !important;
+    max-height: 85vh !important;
+    margin: auto !important;
+    padding: 25px 15px !important;
+  }
+  
+  .cosmic-content {
+    padding: 20px !important;
+  }
+  
+  .action-button {
+    width: 100% !important;
+    max-width: 100px !important;
+    min-height: 50px !important;
+    margin: 8px 0 !important;
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Ensure both buttons are identical */
+  .start-game, .category-button {
+    width: 100% !important;
+    max-width: 200px !important;
+    min-height: 50px !important;
+  }
+  
+  /* Game over modal fixes */
   .gameover-modal {
-    width: 90%;
-    height: 85%;
-    min-width: 320px;
-    padding: 20px;
+    width: 95% !important;
+    height: 90% !important;
+    min-width: 300px !important;
+    padding: 15px !important;
   }
   
   .cosmic-button {
     min-width: 70px;
     padding: 10px 16px;
     gap: 6px;
+    font-size: 12px !important;
   }
   
   .cosmic-button .button-text {
@@ -976,5 +1171,123 @@ ul li {
   
   .gameover-buttons {
     gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Fix notification positioning */
+  .notification-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 200;
+  }
+  
+  /* Ensure proper text sizing */
+  .game-title {
+    font-size: clamp(28px, 8vw, 48px) !important;
+  }
+  
+  .game-subtitle {
+    font-size: clamp(20px, 6vw, 36px) !important;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  /* Home screen modal for very small screens */
+  .modal-content-base {
+    width: 95% !important;
+    max-width: 350px !important;
+    height: auto !important;
+    max-height: 80vh !important;
+    margin: auto !important;
+    padding: 20px 15px !important;
+  }
+  
+  /* Better centering for very small screens */
+  .game-layout {
+    margin-top: 40px !important;
+  }
+  
+  .hangman-container {
+    width: 160px !important;
+    height: 200px !important;
+    transform: scale(0.7) !important;
+    margin: 60px auto 30px auto !important; /* Better centering */
+  }
+  
+  .word-section {
+    margin: 30px 0 !important; /* Better spacing */
+  }
+  
+  .pole_h {
+    width: 100px !important;
+    left: 30px !important;
+  }
+  
+  .pole_v {
+    height: 170px !important;
+    left: 30px !important;
+  }
+  
+  .rope {
+    height: 25px !important;
+    left: 115px !important;
+    bottom: 170px !important;
+  }
+  
+  .skeleton-head {
+    left: 107px !important;
+    bottom: 172px !important;
+  }
+  
+  .skeleton-upper {
+    left: 93px !important;
+    bottom: 174px !important;
+  }
+  
+  .skeleton-rightarm {
+    left: 70px !important;
+    bottom: 245px !important;
+  }
+  
+  .skeleton-leftarm {
+    left: 135px !important;
+    bottom: 330px !important;
+  }
+  
+  .skeleton-rightleg {
+    left: 100px !important;
+    bottom: 350px !important;
+  }
+  
+  .skeleton-leftleg {
+    left: 120px !important;
+    bottom: 465px !important;
+  }
+  
+  .letter {
+    width: 20px !important;
+    height: 30px !important;
+    font-size: 16px !important;
+  }
+  
+  .text-game-large {
+    font-size: 1.5rem !important;
+  }
+  
+  .wrong-letters-container {
+    font-size: 1rem !important;
+  }
+  
+  .nav-section {
+    padding: 8px 10px !important;
+  }
+  
+  .home-container .home-button {
+    width: 35px !important;
+    height: 35px !important;
   }
 }
