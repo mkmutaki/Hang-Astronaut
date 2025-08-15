@@ -16,12 +16,9 @@
   }
   
   .text-game-large {
-    @apply text-center text-off-white text-4xl flex justify-center opacity-80 tracking-wide;
+    @apply text-center text-off-white text-2xl opacity-80 tracking-wide;
   }
-  
-  .text-game-medium {
-    @apply text-[1.4rem] text-off-white opacity-50 flex items-center mr-5;
-  }
+
   
   .modal-overlay {
     @apply absolute top-0 left-0 z-[200] h-screen w-screen flex justify-center items-center transition-opacity duration-500;
@@ -36,7 +33,7 @@
   }
   
   .nav-section {
-    @apply absolute top-0 w-full h-[11%] z-[100] grid grid-cols-3 justify-stretch items-stretch content-stretch bg-transparent p-[2.5];
+    @apply relative top-0 w-full h-auto z-[100] grid grid-cols-3 justify-stretch items-center content-center bg-transparent px-4 py-[10px];
   }
   
   .game-layout {
@@ -488,12 +485,8 @@ ul li {
   animation: homeGlow 3s infinite;
 }
 
-.guesses-left::before {
-  content: "Moves left:";
-}
-
 .guesses-left span {
-  @apply flex items-center w-auto text-center text-off-white text-[1.4rem] opacity-100;
+  @apply block w-auto text-off-white text-[18px] opacity-100 py-3;
 }
 
 .l {
@@ -952,6 +945,12 @@ ul li {
 }
 
 /* Responsive adjustments */
+@media (max-width: 4000px) {
+  .guesses-left span {
+    font-size: 28px !important;
+  }
+}
+
 @media (max-width: 1024px) {
   /* Home screen modal overlay centered and reduced size for md and smaller screens */
   .modal-content-base {
@@ -969,6 +968,28 @@ ul li {
     max-width: 200px !important;
     min-height: 50px !important;
     margin: 8px 0 !important;
+  }
+  
+  /* Ensure proper alignment of navbar items */
+  .home-container {
+    justify-self: start;
+    align-self: center;
+  }
+  
+  .category {
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+  }
+  
+  .guesses-left {
+    justify-self: end;
+    align-self: center;
+    text-align: right;
+  }
+
+  .guesses-left span {
+    font-size: 28px !important;
   }
   
   /* Center game elements better by adding more top margin */
@@ -1005,18 +1026,11 @@ ul li {
     padding: 0 10px;
   }
   
-  /* Fix navigation bar */
-  .nav-section {
-    height: auto !important;
-    padding: 10px 15px !important;
-    grid-template-columns: auto 1fr auto !important;
-    gap: 10px;
-    align-items: center;
-  }
-  
-  /* Adjust navigation elements */
+  /* Reset grid positioning for smaller screens and use flexbox alignment */
   .home-container {
     margin: 0 !important;
+    justify-self: start;
+    align-self: center;
   }
   
   .home-container .home-button {
@@ -1027,17 +1041,25 @@ ul li {
   
   .category {
     margin: 0 !important;
+    justify-self: center;
+    align-self: center;
+    flex: 1;
     text-align: center;
   }
   
   .text-game-large {
-    font-size: 1.8rem !important;
+    font-size: 1.5rem !important;
   }
   
   .guesses-left {
-    margin: 0 !important;
+    justify-self: end;
+    align-self: center;
     text-align: right;
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+    .guesses-left span {
+    font-size: 20px !important;
   }
   
   /* Fix word container */
@@ -1062,7 +1084,7 @@ ul li {
     min-height: 50px;
     flex-wrap: wrap;
     font-size: 1.2rem !important;
-    padding: 10px;
+    padding: 10px 0px;
   }
   
   /* Scale hangman parts for mobile */
@@ -1208,14 +1230,14 @@ ul li {
   
   /* Better centering for very small screens */
   .game-layout {
-    margin-top: 40px !important;
+    margin-top: 0px !important;
   }
   
   .hangman-container {
     width: 160px !important;
     height: 200px !important;
     transform: scale(0.7) !important;
-    margin: 60px auto 30px auto !important; /* Better centering */
+    margin: 20px auto 0px auto !important; /* Better centering */
   }
   
   .word-section {
@@ -1274,20 +1296,272 @@ ul li {
     font-size: 16px !important;
   }
   
-  .text-game-large {
-    font-size: 1.5rem !important;
-  }
-  
   .wrong-letters-container {
     font-size: 1rem !important;
-  }
-  
-  .nav-section {
-    padding: 8px 10px !important;
   }
   
   .home-container .home-button {
     width: 35px !important;
     height: 35px !important;
+  }
+}
+
+/* On-Screen Keyboard Styles */
+.onscreen-keyboard-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 70%, transparent 100%);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.onscreen-keyboard-overlay.show {
+  transform: translateY(0);
+}
+
+.onscreen-keyboard {
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  border: 2px solid #475569;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(71, 85, 105, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.onscreen-keyboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(148, 163, 184, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.keyboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.keyboard-title {
+  color: #f8fafc;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(248, 250, 252, 0.3);
+}
+
+.keyboard-close {
+  background: rgba(71, 85, 105, 0.5);
+  border: 1px solid #64748b;
+  color: #f8fafc;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  z-index: 1;
+  position: relative;
+}
+
+.keyboard-close:hover {
+  background: rgba(239, 68, 68, 0.7);
+  border-color: #ef4444;
+  transform: scale(1.1);
+}
+
+.keyboard-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.keyboard-key {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%);
+  border: 2px solid #64748b;
+  color: #f8fafc;
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.keyboard-key::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.keyboard-key:hover::before,
+.keyboard-key:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+.keyboard-key:hover {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+  border-color: #94a3b8;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard-key:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-key.disabled {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  border-color: #4b5563;
+  color: #6b7280;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.keyboard-key.disabled::before {
+  display: none;
+}
+
+.keyboard-key.correct {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #34d399;
+  animation: correctPulse 0.6s ease-in-out;
+}
+
+.keyboard-key.wrong {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: #f87171;
+  animation: wrongShake 0.6s ease-in-out;
+}
+
+@keyframes correctPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Make word container clickable indicator */
+.word-container {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.word-container:hover {
+  transform: translateY(-2px);
+}
+
+.word-container::after {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.9);
+  color: #cbd5e1;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .word-container::after {
+    display: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .word-container::after {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive design for keyboard */
+@media (max-width: 768px) {
+  .onscreen-keyboard {
+    margin: 0 10px;
+    padding: 15px;
+  }
+  
+  .keyboard-key {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+  
+  .keyboard-row {
+    gap: 6px;
+  }
+  
+  .keyboard-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .onscreen-keyboard {
+    padding: 12px;
+  }
+  
+  .keyboard-key {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .keyboard-row {
+    gap: 4px;
   }
 }

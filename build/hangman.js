@@ -32,6 +32,11 @@ const categoriesPanel = document.querySelector(".categories-panel");
 const closeCategories = document.querySelector(".close-categories");
 const categoryItems = document.querySelectorAll(".category-item");
 
+// On-Screen Keyboard elements
+const keyboardOverlay = document.querySelector(".onscreen-keyboard-overlay");
+const keyboardClose = document.querySelector(".keyboard-close");
+const keyboardKeys = document.querySelectorAll(".keyboard-key");
+
 const SkeletonLimbs = document.querySelectorAll(".l");
 const guessesLeft = document.querySelector(".guesses-left span");
 const categoryDisplay = document.querySelector(".category span");
@@ -327,6 +332,8 @@ function showGameOverOverlay() {
 function resetGuesses() {
   guesses = 6;
   guessesLeft.innerText = `${guesses}/6`;
+  // Reset keyboard state when guesses are reset
+  resetKeyboardState();
 }
 
 function toggleCat() {
@@ -549,6 +556,9 @@ function selectNewWord() {
   } else {
     selectedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
   }
+  
+  // Reset keyboard state when new word is selected
+  resetKeyboardState();
 }
 
 function updateCategoryCompletedWords() {
@@ -558,9 +568,68 @@ function updateCategoryCompletedWords() {
   }
 }
 
-//// Event Listeners ////
+// On-Screen Keyboard Functions
+function showKeyboard() {
+  if (playable) {
+    keyboardOverlay.classList.remove('hidden');
+    keyboardOverlay.classList.add('show');
+    updateKeyboardState();
+  }
+}
 
-window.addEventListener("keydown", (e) => {
+function hideKeyboard() {
+  keyboardOverlay.classList.remove('show');
+  setTimeout(() => {
+    keyboardOverlay.classList.add('hidden');
+  }, 300);
+}
+
+function updateKeyboardState() {
+  keyboardKeys.forEach(key => {
+    const letter = key.getAttribute('data-key');
+    
+    // Reset all classes
+    key.classList.remove('disabled', 'correct', 'wrong');
+    
+    if (correctLetters.includes(letter)) {
+      key.classList.add('correct', 'disabled');
+    } else if (wrongLetters.includes(letter)) {
+      key.classList.add('wrong', 'disabled');
+    }
+  });
+}
+
+function handleKeyboardInput(letter) {
+  if (!playable || correctLetters.includes(letter) || wrongLetters.includes(letter)) {
+    return;
+  }
+  
+  // Mark the category as played when the first guess is made
+  categoryProgress[currentCategory].played = true;
+  
+  if (selectedWord.includes(letter)) {
+    correctLetters.push(letter);
+    displayWord();
+  } else {
+    wrongLetters.push(letter);
+    addWrongLetters();
+    
+    // Check if game should end due to zero moves left
+    if (guesses === 0 && playable) {
+      showGameOverOverlay();
+    }
+  }
+  
+  // Update keyboard state after input
+  updateKeyboardState();
+}
+
+// Detect if device is touch-capable
+function isTouchDevice() {
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+}
+
+document.addEventListener('keydown', (e) => {
   const key = e.key;
   if (playable) {
     // Confirm that key pressed is a letter
@@ -810,3 +879,67 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set initial button text
   updatePlayButtonText();
 });
+
+// On-Screen Keyboard Event Listeners
+
+// Word container click/touch to show keyboard
+wordEl.addEventListener('click', function() {
+  showKeyboard();
+});
+
+wordEl.addEventListener('touchstart', function(e) {
+  e.preventDefault(); // Prevent double-firing of events
+  showKeyboard();
+});
+
+// Keyboard key handling (both click and touch)
+keyboardKeys.forEach(key => {
+  // Click handler for mouse/trackpad
+  key.addEventListener('click', function() {
+    const letter = this.getAttribute('data-key');
+    handleKeyboardInput(letter);
+  });
+  
+  // Touch handler for touch devices
+  key.addEventListener('touchstart', function(e) {
+    e.preventDefault(); // Prevent double-firing
+    const letter = this.getAttribute('data-key');
+    handleKeyboardInput(letter);
+  });
+});
+
+// Keyboard close button
+keyboardClose.addEventListener('click', function() {
+  hideKeyboard();
+});
+
+keyboardClose.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  hideKeyboard();
+});
+
+// Close keyboard when clicking/touching outside of it
+document.addEventListener('click', function(e) {
+  const isClickInside = keyboardOverlay.contains(e.target);
+  const isWordContainer = wordEl.contains(e.target);
+  
+  if (!isClickInside && !isWordContainer && keyboardOverlay.classList.contains('show')) {
+    hideKeyboard();
+  }
+});
+
+document.addEventListener('touchstart', function(e) {
+  const isClickInside = keyboardOverlay.contains(e.target);
+  const isWordContainer = wordEl.contains(e.target);
+  
+  if (!isClickInside && !isWordContainer && keyboardOverlay.classList.contains('show')) {
+    hideKeyboard();
+  }
+});
+
+// Update keyboard state when game starts/resets
+function resetKeyboardState() {
+  keyboardKeys.forEach(key => {
+    key.classList.remove('disabled', 'correct', 'wrong');
+  });
+}

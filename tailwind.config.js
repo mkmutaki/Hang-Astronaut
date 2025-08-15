@@ -4,6 +4,9 @@ module.exports = {
   content: ["./index.html"],
   theme: {
     extend: {
+      screens: {
+        xl: "1025px",
+      },
       fontFamily: {
         Arvo: "Arvo, sans-serif",
       },

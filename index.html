@@ -71,7 +71,7 @@
           </div>
           
           <!-- Small subtitle -->
-          <p class="mission-subtitle text-off-white">Select your mission and embark into the unknown</p>
+          <p class="mission-subtitle text-off-white pt-6">Select your mission and embark into the unknown</p>
           
           <!-- Centered categories panel (hidden by default) -->
           <div class="categories-panel fixed inset-0 flex items-center justify-center z-50 hidden">
@@ -103,14 +103,14 @@
     </section>
     <main class="main-content blur-[10px] blur-in">
       <nav class="nav-bar nav-section">
-        <div class="home-container row-home-row col-home-col flex flex-col justify-between items-end">
+        <div class="home-container row-home-row col-score-col flex flex-col justify-center items-start">
           <button class="home-button"></button>
         </div>
-        <div class="category row-cont-row col-cat-col flex flex-col justify-start last:text-base mt-3">
+        <div class="category row-cont-row col-cat-col flex items-center justify-center">
           <span class="text-game-large mt-0">Planets</span>
         </div>
-        <div class="guesses-left h-full w-full ml-[5%] flex justify-start items-center text-game-medium">
-          <span>6/6</span>
+        <div class="guesses-left flex row-home-row col-home-col h-full w-full">
+          <span class="ml-auto">6/6</span>
         </div>
       </nav>
 
@@ -129,7 +129,7 @@
           <div id="hang-9" class="l skeleton-leftleg"></div>
         </div>
         <div class="word-section">
-          <div class="wrong-letters-container inline-flex text-3xl items-center justify-center my-0 mx-2 h-[2em]">
+          <div class="wrong-letters-container inline-flex text-3xl items-center justify-center mx-2 h-[2em]">
             <div id="wrong_letters"></div>
           </div>
 
@@ -204,6 +204,50 @@
           <div class="particle particle-4"></div>
           <div class="particle particle-5"></div>
           <div class="particle particle-6"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- On-Screen Keyboard for Touch Devices -->
+    <section class="onscreen-keyboard-overlay hidden">
+      <div class="onscreen-keyboard">
+        <div class="keyboard-header">
+          <h3 class="keyboard-title">COSMIC KEYBOARD</h3>
+          <button class="keyboard-close" title="Close Keyboard">✕</button>
+        </div>
+        <div class="keyboard-grid">
+          <div class="keyboard-row">
+            <button class="keyboard-key" data-key="q">Q</button>
+            <button class="keyboard-key" data-key="w">W</button>
+            <button class="keyboard-key" data-key="e">E</button>
+            <button class="keyboard-key" data-key="r">R</button>
+            <button class="keyboard-key" data-key="t">T</button>
+            <button class="keyboard-key" data-key="y">Y</button>
+            <button class="keyboard-key" data-key="u">U</button>
+            <button class="keyboard-key" data-key="i">I</button>
+            <button class="keyboard-key" data-key="o">O</button>
+            <button class="keyboard-key" data-key="p">P</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="keyboard-key" data-key="a">A</button>
+            <button class="keyboard-key" data-key="s">S</button>
+            <button class="keyboard-key" data-key="d">D</button>
+            <button class="keyboard-key" data-key="f">F</button>
+            <button class="keyboard-key" data-key="g">G</button>
+            <button class="keyboard-key" data-key="h">H</button>
+            <button class="keyboard-key" data-key="j">J</button>
+            <button class="keyboard-key" data-key="k">K</button>
+            <button class="keyboard-key" data-key="l">L</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="keyboard-key" data-key="z">Z</button>
+            <button class="keyboard-key" data-key="x">X</button>
+            <button class="keyboard-key" data-key="c">C</button>
+            <button class="keyboard-key" data-key="v">V</button>
+            <button class="keyboard-key" data-key="b">B</button>
+            <button class="keyboard-key" data-key="n">N</button>
+            <button class="keyboard-key" data-key="m">M</button>
+          </div>
         </div>
       </div>
     </section>
