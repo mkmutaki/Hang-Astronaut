@@ -45,7 +45,7 @@
   }
   
   .word-section {
-    @apply h-[19em] mt-56 mr-32;
+    @apply h-[19em] mt-64 mr-32;
   }
   
   .popup-overlay {
@@ -587,7 +587,7 @@ ul li {
 }
 
 .wrong-letters-container span {
-  @apply text-3xl tracking-[0.5em] text-off-white;
+  @apply text-xl md:text-3xl tracking-[0.5em] text-off-white;
 }
 
 .word-container span {
@@ -1022,7 +1022,7 @@ ul li {
   /* Fix word section positioning with better spacing */
   .word-section {
     height: auto !important;
-    margin: 40px 0 !important; /* More margin for better spacing */
+    margin: 60px auto auto auto !important; /* More margin for better spacing */
     padding: 0 10px;
   }
   
@@ -1105,33 +1105,35 @@ ul li {
   }
   
   .skeleton-head {
-    left: 127px !important;
+    left: 123px !important;
     bottom: 202px !important;
   }
   
   .skeleton-upper {
-    left: 110px !important;
+    left: 102px !important;
     bottom: 204px !important;
   }
   
   .skeleton-rightarm {
-    left: 82px !important;
-    bottom: 290px !important;
+    left: 160px !important;
+    bottom: 300px !important;
+    transform: rotate(-25deg) !important;
   }
   
   .skeleton-leftarm {
-    left: 159px !important;
-    bottom: 390px !important;
+    left: 70px !important;
+    bottom: 425px !important;
+    transform: rotate(25deg) !important;
   }
   
   .skeleton-rightleg {
-    left: 118px !important;
-    bottom: 415px !important;
+    left: 112px !important;
+    bottom: 470px !important;
   }
   
   .skeleton-leftleg {
     left: 141px !important;
-    bottom: 545px !important;
+    bottom: 550px !important;
   }
   
   /* Modal improvements */
@@ -1241,7 +1243,7 @@ ul li {
   }
   
   .word-section {
-    margin: 30px 0 !important; /* Better spacing */
+    margin: 50px auto auto auto !important; /* Better spacing */
   }
   
   .pole_h {
@@ -1261,32 +1263,34 @@ ul li {
   }
   
   .skeleton-head {
-    left: 107px !important;
+    left: 103px !important;
     bottom: 172px !important;
   }
   
   .skeleton-upper {
-    left: 93px !important;
+    left: 82px !important;
     bottom: 174px !important;
   }
   
   .skeleton-rightarm {
-    left: 70px !important;
-    bottom: 245px !important;
+    left: 138px !important;
+    bottom: 275px !important;
+    transform: rotate(-25deg) !important;
   }
   
   .skeleton-leftarm {
-    left: 135px !important;
-    bottom: 330px !important;
+    left: 52px !important;
+    bottom: 400px !important;
+    transform: rotate(25deg) !important;
   }
   
   .skeleton-rightleg {
-    left: 100px !important;
-    bottom: 350px !important;
+    left: 88px !important;
+    bottom: 440px !important;
   }
   
   .skeleton-leftleg {
-    left: 120px !important;
+    left: 145px !important;
     bottom: 465px !important;
   }
   
@@ -1298,6 +1302,7 @@ ul li {
   
   .wrong-letters-container {
     font-size: 1rem !important;
+    margin-top: 25px !important;
   }
   
   .home-container .home-button {
