@@ -22,7 +22,7 @@
     </video>
 
     <section class="modal modal-overlay">
-      <div class="modal-content modal-content-base drop-down">
+      <div class="modal-content modal-content-base">
         <!-- Animated starfield background -->
         <div class="animated-stars"></div>
         
@@ -31,19 +31,16 @@
         <div class="floating-planet planet-2"></div>
         <div class="floating-planet planet-3"></div>
         
-        <div class="cosmic-content">
+        <div class="cosmic-content p-8 text-center relative z-10">
           <!-- Rocket ship icon -->
-          <div class="rocket-container">
-            <div class="rocket-icon">🚀</div>
-            <div class="rocket-glow"></div>
-          </div>
+          <div class="text-6xl mb-4 animate-pulse">🚀</div>
           
           <!-- Game title -->
           <h1 class="game-title mt-2 mb-0">COSMIC</h1>
           <h2 class="game-subtitle mb-2">HANGMAN</h2>
           
           <!-- Subtitle -->
-          <p class="game-description mb-8">Navigate the depths of space through words</p>
+          <p class="text-slate-300 mb-8">Navigate the depths of space through words</p>
           
           <!-- Action buttons -->
           <div class="menu-container flex flex-col justify-center items-center">
@@ -59,7 +56,7 @@
                 <span class="button-text text-sm">MISSION TYPES</span>
                 <div class="button-shimmer"></div>
               </button>
-              <ul class="list hidden bg-off-black border border-slate-600 rounded-lg py-2 px-4 absolute w-full mt-2 z-10">
+              <ul class="list hidden bg-slate-800 border border-slate-600 rounded-lg py-2 px-4 absolute w-full mt-2 z-10">
                 <li>Planets</li>
                 <li>Galaxies</li>
                 <li>Space Tech</li>
@@ -72,13 +69,13 @@
           </div>
           
           <!-- Small subtitle -->
-          <p class="mission-subtitle text-off-white pt-6">Select your mission and embark into the unknown</p>
+          <p class="text-slate-400 pt-6">Select your mission and embark into the unknown</p>
           
           <!-- Centered categories panel (hidden by default) -->
-          <div class="categories-panel fixed inset-0 flex items-center justify-center z-50 hidden">
-            <div class="categories-container bg-off-black bg-opacity-90 border border-slate-600 rounded-xl p-6 w-[80%] max-w-md mx-auto shadow-lg transform scale-95 transition-all duration-300">
-              <h3 class="categories-title text-xl font-bold text-off-white mb-4">SELECT MISSION TYPE</h3>
-              <ul class="categories-list grid grid-cols-1 gap-3 max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-400">
+          <div class="categories-panel fixed inset-0 items-center justify-center z-50 hidden">
+            <div class="categories-container bg-slate-900 bg-opacity-95 border border-slate-600 rounded-xl p-6 w-[80%] max-w-md mx-auto shadow-lg transform scale-95 transition-all duration-300">
+              <h3 class="categories-title text-xl font-bold text-slate-100 mb-4">SELECT MISSION TYPE</h3>
+              <ul class="categories-list grid grid-cols-1 gap-3 max-h-[300px] overflow-y-auto">
                 <li class="category-item category-item-base">Planets</li>
                 <li class="category-item category-item-base">Galaxies</li>
                 <li class="category-item category-item-base">Space Tech</li>
@@ -87,30 +84,23 @@
                 <li class="category-item category-item-base">Space Missions</li>
                 <li class="category-item category-item-base">🌍 from Space</li>
               </ul>
-              <button class="close-categories mt-4 w-full py-2 px-4 bg-slate-700 rounded-lg text-off-white hover:bg-slate-600 transition-colors">
+              <button class="close-categories mt-4 w-full py-2 px-4 bg-slate-700 rounded-lg text-slate-100 hover:bg-slate-600 transition-colors">
                 Close
               </button>
             </div>
           </div>
         </div>
-        
-        <!-- Cosmic particles overlay -->
-        <div class="cosmic-particles">
-          <div class="particle particle-1"></div>
-          <div class="particle particle-2"></div>
-          <div class="particle particle-3"></div>
-        </div>
       </div>
     </section>
     <main class="main-content blur-[10px] blur-in">
       <nav class="nav-bar nav-section">
-        <div class="home-container row-home-row col-score-col flex flex-col justify-center items-start">
+        <div class="home-container flex flex-col justify-center items-start">
           <button class="home-button"></button>
         </div>
-        <div class="category row-cont-row col-cat-col flex items-center justify-center">
+        <div class="category flex items-center justify-center">
           <span class="text-game-large mt-0">Planets</span>
         </div>
-        <div class="guesses-left flex row-home-row col-home-col h-full w-full">
+        <div class="guesses-left flex h-full w-full">
           <span class="ml-auto">6/6</span>
         </div>
       </nav>
@@ -135,7 +125,7 @@
           </div>
 
           <div>
-            <span class="text-center relative h-[26%] flex justify-center items-stretch text-2xl text-off-white">Guess the Word:</span>
+            <span class="text-center relative h-[26%] flex justify-center items-stretch text-2xl text-slate-100">Guess the Word:</span>
             <ul class="word-container relative h-[26%] flex justify-center items-stretch"></ul>
           </div>
         </div>
@@ -144,113 +134,60 @@
       <footer>
         <!-- Notification -->
         <div class="notification-container">
-          <p class="m-0 text-center text-off-white">You have already entered this letter</p>
+          <p class="m-0 text-center text-slate-100">You have already entered this letter</p>
         </div>
       </footer>
     </main>
     <section class="popup popup-overlay">
       <div class="gameover-box gameover-modal">
         <!-- Animated starfield background -->
-        <div class="animated-stars gameover-stars"></div>
+        <div class="animated-stars"></div>
         
         <!-- Floating planets -->
-        <div class="floating-planet planet-1 gameover-planet"></div>
-        <div class="floating-planet planet-2 gameover-planet"></div>
-        <div class="floating-planet planet-3 gameover-planet"></div>
+        <div class="floating-planet planet-1"></div>
+        <div class="floating-planet planet-2"></div>
+        <div class="floating-planet planet-3"></div>
         
-        <div class="gameover-content">
+        <div class="gameover-content text-center z-10 max-w-600 mx-auto p-8 relative flex flex-col items-center justify-center h-full">
           <!-- Status Icon Container -->
-          <div class="status-icon-container">
-            <div class="status-icon" id="status-icon">🚀</div>
+          <div class="status-icon-container mb-4 flex justify-center relative">
+            <div class="status-icon text-6xl" id="status-icon">🚀</div>
             <div class="status-glow" id="status-glow"></div>
           </div>
           
           <!-- Game Status Title -->
-          <h1 class="gameover-title" id="gameover-title">MISSION</h1>
-          <h2 class="gameover-subtitle" id="gameover-subtitle">STATUS</h2>
+          <h1 class="gameover-title text-3xl font-bold text-slate-100 mb-2" id="gameover-title">MISSION</h1>
+          <h2 class="gameover-subtitle text-xl font-bold text-slate-300 mb-4" id="gameover-subtitle">STATUS</h2>
           
           <!-- Status Message -->
-          <p class="status-description" id="status-description">Mission status report</p>
+          <p class="status-description text-slate-400 mb-6" id="status-description">Mission status report</p>
           
           <!-- Reveal Word Section -->
-          <div class="reveal-section">
-            <h3 id="reveal-word" class="reveal-word-text"></h3>
+          <div class="reveal-section mb-6 p-4 bg-slate-800 bg-opacity-30 border border-slate-600 rounded-lg backdrop-blur-md">
+            <h3 id="reveal-word" class="reveal-word-text text-lg text-slate-100 font-semibold"></h3>
           </div>
           
           <!-- Action Buttons -->
-          <div class="buttons-over gameover-buttons">
-            <button class="main-menu cosmic-button" title="Return to Base">
+          <div class="buttons-over gameover-buttons flex gap-4 justify-center flex-wrap">
+            <button class="main-menu cosmic-button bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-colors border border-slate-600" title="Return to Base">
               <span class="button-icon">🏠</span>
               <span class="button-text">BASE</span>
               <div class="button-shimmer"></div>
             </button>
-            <button class="play-again cosmic-button" title="Retry Mission">
+            <button class="play-again cosmic-button bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors border border-slate-600" title="Retry Mission">
               <span class="button-icon">🔄</span>
               <span class="button-text">RETRY</span>
               <div class="button-shimmer"></div>
             </button>
-            <button class="next-game cosmic-button" title="Next Mission">
+            <button class="next-game cosmic-button bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors border border-slate-600" title="Next Mission">
               <span class="button-icon">➡️</span>
               <span class="button-text">NEXT</span>
               <div class="button-shimmer"></div>
             </button>
           </div>
         </div>
-        
-        <!-- Cosmic particles overlay -->
-        <div class="cosmic-particles gameover-particles">
-          <div class="particle particle-1"></div>
-          <div class="particle particle-2"></div>
-          <div class="particle particle-3"></div>
-          <div class="particle particle-4"></div>
-          <div class="particle particle-5"></div>
-          <div class="particle particle-6"></div>
-        </div>
       </div>
     </section>
-    
-    <!-- On-Screen Keyboard for Touch Devices -->
-    <section class="onscreen-keyboard-overlay hidden">
-      <div class="onscreen-keyboard">
-        <div class="keyboard-header">
-          <h3 class="keyboard-title">COSMIC KEYBOARD</h3>
-          <button class="keyboard-close" title="Close Keyboard">✕</button>
-        </div>
-        <div class="keyboard-grid">
-          <div class="keyboard-row">
-            <button class="keyboard-key" data-key="q">Q</button>
-            <button class="keyboard-key" data-key="w">W</button>
-            <button class="keyboard-key" data-key="e">E</button>
-            <button class="keyboard-key" data-key="r">R</button>
-            <button class="keyboard-key" data-key="t">T</button>
-            <button class="keyboard-key" data-key="y">Y</button>
-            <button class="keyboard-key" data-key="u">U</button>
-            <button class="keyboard-key" data-key="i">I</button>
-            <button class="keyboard-key" data-key="o">O</button>
-            <button class="keyboard-key" data-key="p">P</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="keyboard-key" data-key="a">A</button>
-            <button class="keyboard-key" data-key="s">S</button>
-            <button class="keyboard-key" data-key="d">D</button>
-            <button class="keyboard-key" data-key="f">F</button>
-            <button class="keyboard-key" data-key="g">G</button>
-            <button class="keyboard-key" data-key="h">H</button>
-            <button class="keyboard-key" data-key="j">J</button>
-            <button class="keyboard-key" data-key="k">K</button>
-            <button class="keyboard-key" data-key="l">L</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="keyboard-key" data-key="z">Z</button>
-            <button class="keyboard-key" data-key="x">X</button>
-            <button class="keyboard-key" data-key="c">C</button>
-            <button class="keyboard-key" data-key="v">V</button>
-            <button class="keyboard-key" data-key="b">B</button>
-            <button class="keyboard-key" data-key="n">N</button>
-            <button class="keyboard-key" data-key="m">M</button>
-          </div>
-        </div>
-      </div>
-    </section>
+
   </body>
 </html>
