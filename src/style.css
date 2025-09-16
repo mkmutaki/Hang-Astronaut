@@ -23,7 +23,7 @@
   }
   
   .modal-content-base {
-    @apply h-[70%] w-[60%] border rounded-[20px] bg-slate-900 text-center justify-center items-center block shadow-md overflow-hidden;
+    @apply h-[70%] w-[60%] border rounded-[20px] bg-slate-900 text-center shadow-md overflow-hidden flex justify-center items-center;
   }
   
   .category-item-base {
@@ -55,6 +55,16 @@
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
     border: 2px solid #475569;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(71, 85, 105, 0.3);
+  }
+
+  /* Categories Panel */
+  .categories-panel {
+    @apply fixed inset-0 z-50 items-center justify-center;
+    display: flex;
+  }
+  
+  .categories-panel.hidden {
+    display: none;
   }
   
   /* Essential Animation Components */
@@ -483,6 +493,17 @@ ul li:hover {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .modal-content-base { 
+    height: 85% !important; 
+    width: 90% !important; 
+    max-height: 90vh !important; 
+  }
+  
+  .cosmic-content {
+    padding: 16px !important;
+    max-width: 100% !important;
+  }
+
   .game-layout { display: block !important; padding: 10px; margin-top: 60px !important; }
   .hangman-container { width: 200px !important; height: 250px !important; margin: 80px auto 40px auto !important; transform: scale(0.8); }
   .word-section { height: auto !important; margin: 60px auto auto auto !important; padding: 0 10px; }
