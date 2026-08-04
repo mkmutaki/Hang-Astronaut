@@ -37,7 +37,105 @@ const keyboardOverlay = document.querySelector(".onscreen-keyboard-overlay");
 const keyboardClose = document.querySelector(".keyboard-close");
 const keyboardKeys = document.querySelectorAll(".keyboard-key");
 
-const SkeletonLimbs = document.querySelectorAll(".l");
+const PART_IDS = ["part-head", "part-torso", "part-arm-right", "part-arm-left", "part-leg-right", "part-leg-left"];
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const partAnimStates = {
+  "part-head": { from: { translateY: -40, opacity: 0 }, to: { translateY: 0, opacity: 1 } },
+  "part-torso": { from: { scale: 0.5, opacity: 0 }, to: { scale: 1, opacity: 1 } },
+  "part-arm-right": { from: { rotate: -90, opacity: 0 }, to: { rotate: 0, opacity: 1 } },
+  "part-arm-left": { from: { rotate: 90, opacity: 0 }, to: { rotate: 0, opacity: 1 } },
+  "part-leg-right": { from: { rotate: -50, opacity: 0 }, to: { rotate: 0, opacity: 1 } },
+  "part-leg-left": { from: { rotate: 50, opacity: 0 }, to: { rotate: 0, opacity: 1 } },
+};
+
+let swingAnim = null;
+let swingAmplitude = 3;
+
+function startSwing() {
+  if (prefersReducedMotion || typeof anime === "undefined") return;
+  if (swingAnim) swingAnim.pause();
+  const current = parseFloat(anime.get("#rig", "rotate")) || 0;
+
+  swingAnim = anime({
+    targets: "#rig",
+    rotate: [{ value: current }, { value: swingAmplitude }, { value: -swingAmplitude }],
+    duration: 2400,
+    easing: "easeInOutSine",
+    direction: "alternate",
+    loop: true,
+  });
+
+  anime({
+    targets: "#tether-lower",
+    rotate: [{ value: swingAmplitude * 0.6 }, { value: -swingAmplitude * 0.6 }],
+    duration: 1500,
+    easing: "easeInOutSine",
+    direction: "alternate",
+    loop: true,
+  });
+}
+
+function revealPart(id) {
+  const el = document.getElementById(id);
+  const state = partAnimStates[id];
+  if (!el || !state) return;
+
+  if (prefersReducedMotion || typeof anime === "undefined") {
+    el.style.opacity = 1;
+    return;
+  }
+
+  anime.set(el, state.from);
+  anime({ targets: el, ...state.to, duration: 700, easing: "easeOutElastic(1, .6)" });
+
+  anime({
+    targets: "#astronaut",
+    rotate: [{ value: -4, duration: 70 }, { value: 4, duration: 70 }, { value: -2, duration: 70 }, { value: 0, duration: 120 }],
+    easing: "easeInOutSine",
+  });
+
+  swingAmplitude = Math.min(swingAmplitude + 1.5, 11);
+  startSwing();
+}
+
+function syncPartsInstant(count) {
+  PART_IDS.forEach((id, i) => {
+    const el = document.getElementById(id);
+    const state = partAnimStates[id];
+    if (!el || !state) return;
+    if (typeof anime !== "undefined") {
+      anime.set(el, i < count ? state.to : state.from);
+    } else {
+      el.style.opacity = i < count ? 1 : 0;
+    }
+  });
+  swingAmplitude = Math.min(3 + count * 1.5, 11);
+  startSwing();
+}
+
+function resetHangmanRig() {
+  syncPartsInstant(0);
+  if (typeof anime !== "undefined") {
+    anime.set("#rig", { rotate: 0 });
+    anime.set("#tether-lower", { rotate: 0 });
+    anime.set("#astronaut", { rotate: 0 });
+  }
+  document.getElementById("part-head")?.classList.remove("visor-glitch");
+}
+
+function triggerLossBurst() {
+  if (prefersReducedMotion || typeof anime === "undefined") return;
+  const previousAmplitude = swingAmplitude;
+  swingAmplitude = 20;
+  startSwing();
+  document.getElementById("part-head")?.classList.add("visor-glitch");
+  setTimeout(() => {
+    swingAmplitude = previousAmplitude;
+    startSwing();
+  }, 2600);
+}
+
 const guessesLeft = document.querySelector(".guesses-left span");
 const categoryDisplay = document.querySelector(".category span");
 
@@ -258,21 +356,14 @@ function addWrongLetters() {
   // add letters
   wrongLettersEl.innerHTML = `${wrongLetters.map((letter) => `<span>${letter}</span>`).join("")}`;
 
-  // Display limbs on wrong letters
-  SkeletonLimbs.forEach((limb, i) => {
-    const errors = wrongLetters.length;
-
-    if (i < errors) {
-      limb.style.display = "flex";
-    } else {
-      limb.style.display = "none";
-    }
-  });
+  // Animate the newly revealed part in
+  const newPartId = PART_IDS[wrongLetters.length - 1];
+  if (newPartId) revealPart(newPartId);
 
   lessenGuesses();  // Update guesses and check if game over
-  
-  // Check if all limbs are displayed and the game is still playable
-  if (wrongLetters.length === SkeletonLimbs.length && playable) {
+
+  // Check if all parts are revealed and the game is still playable
+  if (wrongLetters.length === PART_IDS.length && playable) {
     showGameOverOverlay();
   }
 }
@@ -299,6 +390,8 @@ function lessenGuesses() {
 
 // Function to show game over overlay
 function showGameOverOverlay() {
+  triggerLossBurst();
+
   document.querySelector(".popup").style.visibility = "visible";
   main.classList.add("blur-over");
   
@@ -431,7 +524,8 @@ function restoreCategoryProgress(category) {
   
   // Update display
   displayWord();
-  addWrongLetters();
+  wrongLettersEl.innerHTML = `${wrongLetters.map((letter) => `<span>${letter}</span>`).join("")}`;
+  syncPartsInstant(wrongLetters.length);
 }
 
 function updatePlayButtonText() {
@@ -533,9 +627,7 @@ function resetGame(isNewCategory = false) {
   wrongLettersEl.innerHTML = "";
   
   // Reset visual hangman state
-  SkeletonLimbs.forEach(limb => {
-    limb.style.display = "none";
-  });
+  resetHangmanRig();
 
   // Remove the disable-animations class after a brief moment to re-enable animations for future use
   setTimeout(() => {
@@ -701,10 +793,8 @@ btnPlay.addEventListener("click", function () {
   if (btnPlayText.textContent === "BEGIN MISSION") {
     // Reset visual display completely
     wrongLettersEl.innerHTML = "";
-    SkeletonLimbs.forEach(limb => {
-      limb.style.display = "none";
-    });
-    
+    resetHangmanRig();
+
     // Do not mark as played yet - only mark when user makes first guess
     categoryProgress[currentCategory].played = false;
     
@@ -759,10 +849,8 @@ home.addEventListener("click", function () {
     
     // Clear visual elements
     wrongLettersEl.innerHTML = "";
-    SkeletonLimbs.forEach(limb => {
-      limb.style.display = "none";
-    });
-    
+    resetHangmanRig();
+
     // Select new word and update display
     selectNewWord();
     displayWord();
@@ -805,10 +893,8 @@ overHome.addEventListener("click", function () {
   
   // Clear visual elements
   wrongLettersEl.innerHTML = "";
-  SkeletonLimbs.forEach(limb => {
-    limb.style.display = "none";
-  });
-  
+  resetHangmanRig();
+
   // Select new word and update display
   selectNewWord();
   displayWord();
@@ -870,6 +956,7 @@ document.addEventListener('mousemove', (e) => {
 // Initialize cosmic effects
 document.addEventListener('DOMContentLoaded', () => {
   window.cosmicHangman = new CosmicHangman();
+  resetHangmanRig();
   // Set initial category display to the default category (Planets)
   categoryDisplay.innerText = currentCategory;
   

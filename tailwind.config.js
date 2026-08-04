@@ -8,7 +8,7 @@ module.exports = {
         xl: "1025px",
       },
       fontFamily: {
-        Arvo: "Arvo, sans-serif",
+        Exo: "'Exo 2', sans-serif",
       },
       colors: {
         "off-white": "hsl(0, 0%, 94%)",
